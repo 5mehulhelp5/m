@@ -1,1 +1,1 @@
-[tactical-expressions.com](https://tactical-expressions.com) (Magento 2).
+[tactical-expressions.com](https://tactical-expressions.com) (Magento 2.4.8-p4).
