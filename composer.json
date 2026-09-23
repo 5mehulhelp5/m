@@ -36,7 +36,8 @@
         "olegkoval/magento2-regenerate-url-rewrites": "^1.7",
         "picqer/php-barcode-generator": "*",
         "redchamps/module-guest-orders": "^2.0",
-        "redchamps/module-notification-bar": "^1.0"
+        "redchamps/module-notification-bar": "^1.0",
+        "tactical-expressions/core": "*"
     },
     "require-dev": {
         "allure-framework/allure-phpunit": "~1.2.0",

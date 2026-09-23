@@ -485,6 +485,7 @@ return [
         'RedChamps_NotificationBar' => 1,
         'Sparsh_Banner' => 1,
         'Staempfli_CheckoutNewsletterSubscription' => 1,
+        'TacticalExpressions_Core' => 1,
         'Webkul_QuickPayForOrder' => 1
     ],
     'scopes' => [
