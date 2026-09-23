@@ -25,6 +25,7 @@
         "cweagans/composer-patches": "^1.7",
         "dompdf/dompdf": "*",
         "klaviyo/magento2-extension": "^4.4",
+        "mage2pro/core": "*",
         "magento/composer-root-update-plugin": "~2.0.5",
         "magento/product-community-edition": "2.4.8-p4",
         "mageplaza/magento-2-social-login": "^4.1",
