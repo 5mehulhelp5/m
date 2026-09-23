@@ -435,61 +435,6 @@ return [
         'Staempfli_CheckoutNewsletterSubscription' => 1,
         'Webkul_QuickPayForOrder' => 1
     ],
-    'system' => [
-        'default' => [
-            'dev' => [
-                'debug' => [
-                    'profiler' => '0',
-                    'template_hints_storefront' => '0',
-                    'template_hints_admin' => '0',
-                    'template_hints_blocks' => '0',
-                    'debug_logging' => '0'
-                ],
-                'js' => [
-                    'merge_files' => '0',
-                    'minify_files' => '1',
-                    'move_script_to_bottom' => '1',
-                    'enable_js_bundling' => '0',
-                    'session_storage_logging' => '0',
-                    'translate_strategy' => 'dictionary'
-                ],
-                'css' => [
-                    'minify_files' => '0',
-                    'merge_css_files' => '1',
-                    'use_css_critical_path' => '0'
-                ],
-                'image' => [
-                    'default_adapter' => 'GD2',
-                    'adapters' => [
-                        'GD2' => [
-                            'title' => 'PHP GD2',
-                            'class' => 'Magento\\Framework\\Image\\Adapter\\Gd2'
-                        ],
-                        'IMAGEMAGICK' => [
-                            'title' => 'ImageMagick',
-                            'class' => 'Magento\\Framework\\Image\\Adapter\\ImageMagick'
-                        ]
-                    ]
-                ],
-                'static' => [
-                    'sign' => '1'
-                ],
-                'template' => [
-                    'minify_html' => '0',
-                    'allow_symlink' => '0'
-                ],
-                'front_end_development_workflow' => [
-                    'type' => 'server_side_compilation'
-                ]
-            ],
-            'system' => [
-                'security' => [
-                    'max_session_size_admin' => '1024000',
-                    'max_session_size_storefront' => '512000'
-                ]
-            ]
-        ]
-    ],
     'scopes' => [
         'websites' => [
             'admin' => [
