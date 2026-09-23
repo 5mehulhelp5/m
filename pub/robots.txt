@@ -13,38 +13,10 @@ Allow: /*.css?*           # CSS with cache-busting
 Allow: /*.js?*            # JavaScript with cache-busting
 
 # ============================================
-# Block all Magento internal search result pages
-# ============================================
-Disallow: /catalogsearch/result/
-Disallow: /catalogsearch/result/index/
-Disallow: /?catalogsearch/
-Disallow: /catalog/product/view/
-
-# ============================================
 # BLOCK: All other URL parameters
 # ============================================
-Disallow: /*?*
-Disallow: /*&dir=*
-Disallow: /*&order=*
-Disallow: /*&limit=*
-Disallow: /*?dir=*
-Disallow: /*?order=*
-Disallow: /*?limit=*
-Disallow: /*?product_list_dir=*
-Disallow: /*&product_list_dir=*
-Disallow: /*?product_list_order=*
-Disallow: /*&product_list_order=*
 Disallow: /*?SID=*
 Disallow: /*&SID=*
-Disallow: /*?*cerakote_color=
-Disallow: /*?*color_master=
-Disallow: /*?*finish_type=
-Disallow: /*?*gun_model=
-Disallow: /*?*dust_cover_open=
-Disallow: /*?*mag_cap=
-Disallow: /*?*handguard_length=
-Disallow: /*?*tmarks=
-Disallow: /*?*special_price=
 
 # ============================================
 # BLOCK: Checkout, cart, customer areas
