@@ -1,0 +1,190 @@
+<?xml version="1.0"?>
+<widgets xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Widget:etc/widget.xsd">
+    <widget id="cybersolutionsllc_category_tiles"
+            class="CyberSolutionsLLC\CategoryTiles\Block\Widget\CategoryTiles">
+        <label translate="true">Category Tiles (Shop by Platform)</label>
+        <description translate="true">Displays 3 category tiles with background image and text overlay</description>
+        <parameters>
+            <parameter name="heading" xsi:type="text" visible="true" required="true" sort_order="0">
+                <label translate="true">Section Heading</label>
+                <value>Shop by Platform</value>
+            </parameter>
+            <!-- Tile 1 -->
+            <parameter name="tile1_image" xsi:type="block" visible="true" required="true" sort_order="10">
+                <label translate="true">Tile 1 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+
+            <parameter name="tile1_name" xsi:type="text" visible="true" sort_order="12" required="true" >
+                <label translate="true">Tile 1 - Category Name</label>
+            </parameter>
+            <parameter name="tile1_category_id" xsi:type="block" visible="true" required="true" sort_order="14">
+                <label translate="true">Category</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 2 -->
+            <parameter name="tile2_image" xsi:type="block" visible="true" sort_order="20" required="true" >
+                <label translate="true">Tile 2 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile2_name" xsi:type="text" visible="true" sort_order="21" required="true" >
+                <label translate="true">Tile 2 - Category Name</label>
+            </parameter>
+            <parameter name="tile2_category_id" xsi:type="block" visible="true" required="true" sort_order="22">
+                <label translate="true">Category 2</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 3 -->
+            <parameter name="tile3_image" xsi:type="block" visible="true" required="true" sort_order="30">
+                <label translate="true">Tile 3 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile3_name" xsi:type="text" visible="true" required="true" sort_order="31">
+                <label translate="true">Tile 3 - Category Name</label>
+            </parameter>
+            <parameter name="tile3_category_id" xsi:type="block" visible="true" required="true" sort_order="32">
+                <label translate="true">Category 3</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+        </parameters>
+    </widget>
+    <widget id="cybersolutionsllc_category_six_tiles"
+            class="CyberSolutionsLLC\CategoryTiles\Block\Widget\CategorySixTiles">
+        <label translate="true">2 CyberS - Category Six Tiles (Popular Colors)</label>
+        <description translate="true">Displays Six category tiles with background image and text overlay</description>
+        <parameters>
+            <parameter name="heading" xsi:type="text" visible="true" required="true" sort_order="0">
+                <label translate="true">Section Heading</label>
+                <value>Popular Colors</value>
+            </parameter>
+            <!-- Tile 1 -->
+            <parameter name="tile1_image" xsi:type="block" visible="true" required="true" sort_order="12">
+                <label translate="true">Tile 1 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+
+            <parameter name="tile1_name" xsi:type="text" visible="true" sort_order="10" required="true" >
+                <label translate="true">Tile 1 - Category Name</label>
+            </parameter>
+            <parameter name="tile1_category_id" xsi:type="block" visible="true" required="true" sort_order="14">
+                <label translate="true">Category 1</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 2 -->
+            <parameter name="tile2_image" xsi:type="block" visible="true" sort_order="21" required="true" >
+                <label translate="true">Tile 2 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile2_name" xsi:type="text" visible="true" sort_order="20" required="true" >
+                <label translate="true">Tile 2 - Category Name</label>
+            </parameter>
+            <parameter name="tile2_category_id" xsi:type="block" visible="true" required="true" sort_order="22">
+                <label translate="true">Category 2</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 3 -->
+            <parameter name="tile3_image" xsi:type="block" visible="true" required="true" sort_order="31">
+                <label translate="true">Tile 3 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile3_name" xsi:type="text" visible="true" required="true" sort_order="30">
+                <label translate="true">Tile 3 - Category Name</label>
+            </parameter>
+            <parameter name="tile3_category_id" xsi:type="block" visible="true" required="true" sort_order="32">
+                <label translate="true">Category 3</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 4 -->
+            <parameter name="tile4_image" xsi:type="block" visible="true" required="true" sort_order="41">
+                <label translate="true">Tile 4 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile4_name" xsi:type="text" visible="true" required="true" sort_order="40">
+                <label translate="true">Tile 4 - Category Name</label>
+            </parameter>
+            <parameter name="tile4_category_id" xsi:type="block" visible="true" required="true" sort_order="42">
+                <label translate="true">Category 4</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile 5 -->
+            <parameter name="tile5_image" xsi:type="block" visible="true" required="true" sort_order="51">
+                <label translate="true">Tile 5 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile5_name" xsi:type="text" visible="true" required="true" sort_order="50">
+                <label translate="true">Tile 5 - Category Name</label>
+            </parameter>
+            <parameter name="tile5_category_id" xsi:type="block" visible="true" required="true" sort_order="52">
+                <label translate="true">Category 5</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+            <!-- Tile  6-->
+            <parameter name="tile6_image" xsi:type="block" visible="true" required="true" sort_order="61">
+                <label translate="true">Tile 6 - Image</label>
+                <block class="CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser"/>
+            </parameter>
+            <parameter name="tile6_name" xsi:type="text" visible="true" required="true" sort_order="60">
+                <label translate="true">Tile 6 - Category Name</label>
+            </parameter>
+            <parameter name="tile6_category_id" xsi:type="block" visible="true" required="true" sort_order="62">
+                <label translate="true">Category 6</label>
+                <block class="Magento\Catalog\Block\Adminhtml\Category\Widget\Chooser">
+                    <data>
+                        <item name="button" xsi:type="array">
+                            <item name="open" xsi:type="string" translate="true">Select Category...</item>
+                        </item>
+                    </data>
+                </block>
+            </parameter>
+        </parameters>
+    </widget>
+</widgets>

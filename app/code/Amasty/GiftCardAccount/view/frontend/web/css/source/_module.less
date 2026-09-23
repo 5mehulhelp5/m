@@ -1,0 +1,274 @@
+//
+//  Gift Card Account
+//  ____________________________________________
+
+//
+//  Variables
+//  --------------------------------------------
+
+@amgiftcard-account-button: #3a77bd;
+@amgiftcard-account-info: #e8f6ff;
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .account {
+        .amcard-codes-list {
+            .table-wrapper {
+                &:last-child {
+                    margin-bottom: 20px;
+                }
+            }
+            .messages {
+                margin-bottom: 0;
+            }
+        }
+    }
+
+    .amcard-codes-list,
+    .amcard-field-container {
+        .amcardacc-template-container & {
+            max-width: 360px;
+        }
+
+        &.-cart {
+            max-width: 500px;
+        }
+
+        &.-paypal {
+            margin: 20px 0;
+        }
+
+        .table .action,
+        .amcard-check,
+        .amcard-delete {
+            & {
+                align-self: flex-start;
+                background: none;
+                border: none;
+                box-shadow: none;
+                color: @color-blue2;
+                cursor: pointer;
+                padding: 0;
+                position: relative;
+            }
+
+            &:hover,
+            &:focus {
+                text-decoration: underline;
+            }
+        }
+
+        .amcard-list-btn-container {
+            display: inline-block;
+            padding: 0 10px;
+
+            &:not(:last-child) {
+                border-right: 2px solid @color-gray80;
+            }
+        }
+
+        .amcard-check {
+            margin-top: 10px;
+        }
+    }
+
+    .amcard-field-block {
+        &.-code {
+            margin-top: 10px;
+        }
+
+        .amcard-button {
+            & {
+                font-weight: 600;
+                transition: opacity .3s ease-out;
+            }
+
+            &:hover {
+                opacity: .9;
+            }
+        }
+
+        .amcard-button.-account {
+            background: @amgiftcard-account-button;
+            color: @color-white;
+        }
+
+        .amgcard-datalist-container + .amcard-button {
+            align-self: flex-start;
+            line-height: 16px;
+        }
+    }
+
+    .amcard-card-info {
+        & {
+            background: @amgiftcard-account-info;
+            display: flex;
+            margin-bottom: 10px;
+            padding: 10px;
+        }
+
+        .amcard-field:not(:last-child) {
+            margin-right: 20px;
+        }
+    }
+
+    .amcardacc-messages-container {
+        & {
+            display: none;
+        }
+
+        &.-visible {
+            display: block;
+        }
+    }
+
+    .amcard-form-container .amcard-field.-validate {
+        opacity: 0;
+        position: absolute;
+        width: 0;
+    }
+
+    .amgcard-datalist-container {
+        & {
+            position: relative;
+            width: 100%;
+        }
+
+        &.-active .amgcard-datalist-ul {
+            display: block;
+        }
+
+        .amcard-input-arrow:after {
+            border: 6px solid transparent;
+            border-color: @color-gray20 transparent transparent transparent;
+            content: '';
+            height: 0;
+            position: absolute;
+            right: 10px;
+            top: 14px;
+            width: 0;
+        }
+
+        &.-active .amcard-input-arrow:after {
+            border-color: transparent transparent @color-gray20 transparent;
+            top: 7px;
+        }
+
+        .amcard-datalist-message {
+            font-style: italic;
+        }
+
+        .amcard-field.-datalist {
+            height: 32px;
+        }
+    }
+
+    .amgcard-datalist-ul {
+        & {
+            background: @color-white;
+            border-radius: 2px;
+            display: none;
+            left: 0;
+            list-style: none;
+            margin: 5px 0 0 0;
+            max-height: 200px;
+            overflow: hidden;
+            overflow-y: auto;
+            padding: 0;
+            position: absolute;
+            top: 100%;
+            width: 100%;
+            z-index: 10;
+        }
+
+        .amcard-datalist-li {
+            color: @color-gray20;
+            cursor: pointer;
+            display: block;
+            margin-bottom: 0;
+            padding: 6px 10px;
+            transition: background-color .3s ease-in;
+        }
+
+        .amcard-datalist-li:hover {
+            background-color: rgba(239, 239, 239, .9);
+        }
+    }
+}
+
+//
+//  Desktop
+//  _____________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+
+    .amcard-codes-list {
+
+        .table {
+            .actions {
+                text-align: right;
+                width: 20px;
+            }
+        }
+    }
+
+    .amcard-field-container {
+
+
+        &.-code {
+            .actions-toolbar {
+                text-align: right;
+
+                .primary {
+                    float: none;
+
+                    .action {
+                        margin: 0;
+                    }
+                }
+
+                .secondary {
+                    .action {
+                        margin: 0 0 0 7px;
+                    }
+                }
+            }
+        }
+    }
+}
+
+//
+//  Mobile
+//  _____________________________________________________
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__xs) {
+
+    .amcard-card-info {
+        flex-wrap: wrap;
+        justify-content: space-between;
+
+        .amcard-field {
+            flex: 0 50%;
+
+            &:not(:last-child) {
+                margin-right: 0;
+            }
+        }
+    }
+}
+
+//
+//  Tablet
+//  ----------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .checkout-container {
+        .amcard-codes-list,
+        .amcard-field-container {
+            padding-left: 22px;
+        }
+    }
+}

@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <amstorecredit>
+            <general>
+                <enabled>1</enabled>
+                <refund_automatically>1</refund_automatically>
+                <allow_on_tax>1</allow_on_tax>
+                <allow_on_shipping>1</allow_on_shipping>
+                <transactions_log_cleaning>0</transactions_log_cleaning>
+                <transactions_log_period>90</transactions_log_period>
+            </general>
+            <usage>
+                <restrict>0</restrict>
+                <action>0</action>
+                <use_tooltip>0</use_tooltip>
+                <tooltip_text>If the system accepted less store credit than you initially applied, there are products in the cart that can’t be covered with it.</tooltip_text>
+                <encourage>0</encourage>
+            </usage>
+            <email>
+                <enabled>1</enabled>
+                <sender>general</sender>
+                <reply>general</reply>
+                <template>amstorecredit_email_template</template>
+            </email>
+        </amstorecredit>
+    </default>
+</config>

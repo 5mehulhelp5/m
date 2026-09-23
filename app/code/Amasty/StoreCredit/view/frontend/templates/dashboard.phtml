@@ -1,0 +1,83 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */
+/** @var \Amasty\StoreCredit\Block\Dashboard $block */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<style>
+    .amstorecredit-table .amount-dir-1{
+        color: #b71c1c;
+    }
+
+    .amstorecredit-table .amount-dir-0{
+        color: #0a820b;
+    }
+</style>
+
+<h3><?= $escaper->escapeHtml(__('Store Credit Balance:')) . ' ' . $escaper->escapeHtml($block->getCustomerBalance()) ?></h3>
+<?php
+if ($histories = $block->getCollection()->getItems()): ?>
+    <div class="table-wrapper orders-history">
+        <table class="data table table-order-items amstorecredit-table" id="my-orders-table">
+            <thead class="amrewards-table-header">
+            <tr>
+                <th scope="col" class="col transaction-id"><?= $escaper->escapeHtml(__('Transaction Id')) ?></th>
+                <th scope="col" class="col date"><?= $escaper->escapeHtml(__('Date')) ?></th>
+                <th scope="col" class="col total"><?= $escaper->escapeHtml(__('Change')) ?></th>
+                <th scope="col" class="col new-balance"><?= $escaper->escapeHtml(__('New Balance')) ?></th>
+                <th scope="col" class="col action"><?= $escaper->escapeHtml(__('Action')) ?></th>
+                <th scope="col" class="col action"><?= $escaper->escapeHtml(__('Comment')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php /** @var \Amasty\StoreCredit\Model\History\History $history */ ?>
+            <?php foreach ($histories as $history): ?>
+                <tr>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('Transaction Id')); ?>" class="col transaction-id">
+                        <?= $escaper->escapeHtml($history->getCustomerHistoryId()); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('Date')); ?>" class="col date">
+                        <?= $escaper->escapeHtml($block->formatDate($history->getCreatedAt())); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('Change')); ?>" class="col amount amount-dir-<?= (int)$history->isDeduct(); ?>">
+                        <?= $history->isDeduct() ? '-' : '+' ?><?= $escaper->escapeHtml($block->getFormatDifference($history)); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('New Balance')); ?>" class="col new-balance">
+                        <?= $escaper->escapeHtml($block->getFormatBalance($history)) ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('Action')); ?>" class="col status">
+                        <?= $escaper->escapeHtml($block->getSmallActionMessage($history)); ?>
+                    </td>
+                    <td data-th="<?= $escaper->escapeHtmlAttr(__('Comment')); ?>" class="col comment">
+                        <?php if ($history->getMessage() && $history->isVisibleForCustomer()): ?>
+                            <?= $escaper->escapeHtml($history->getMessage()) ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+            </tbody>
+        </table>
+    </div>
+    <?php if ($pager = $block->getPagerHtml()): ?>
+        <div class="toolbar">
+            <div class="amstorecredit-pager"><?= /* @noEscape */ $pager ?></div>
+        </div>
+    <?php endif; ?>
+<?php else: ?>
+    <div class="message info empty">
+        <span><?= $escaper->escapeHtml(__('You have no store credit history.')); ?></span>
+    </div>
+<?php endif ?>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // WCAG compatibility
+        const limiter = document.querySelector('#limiter');
+        if (limiter) {
+            limiter.setAttribute('aria-label', <?= $escaper->escapeHtmlAttr(__('Show items per page')) ?>);
+        }
+    })
+</script>

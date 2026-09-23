@@ -1,0 +1,8 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <!--
+        Child-to-parent 301 redirect (introduced for TEX-13) disabled: child SKUs must
+        resolve on their own URL instead of redirecting to the parent configurable product.
+        Observer class left in place for reference/history only; it is no longer wired up.
+    -->
+</config>

@@ -1,0 +1,118 @@
+.category-tiles-widget {
+    margin: 30px auto;
+}
+
+.category-tiles-heading {
+    text-align: center;
+    font-size: 28px;
+    font-weight: 700;
+    margin-bottom: 20px;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+.category-tiles-container {
+    display: flex;
+    gap: 15px;
+    justify-content: center;
+}
+
+.category-tile {
+    position: relative;
+    flex: 1;
+    max-width: 33.333%;
+    aspect-ratio: 4 / 3;
+    overflow: hidden;
+    border-radius: 4px;
+    display: block;
+    text-decoration: none;
+}
+
+.category-tile-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    transition: transform 0.3s ease;
+}
+
+.category-tile:hover .category-tile-image {
+    transform: scale(1.05);
+}
+
+.category-tile-label {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    color: #fff;
+    font-size: 22px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-align: center;
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.7));
+}
+
+/* Mobile */
+@media (max-width: 767px) {
+    .category-tiles-container {
+        flex-direction: column;
+    }
+
+    .category-tile {
+        max-width: 100%;
+        aspect-ratio: 16 / 9;
+    }
+
+    .category-tiles-heading {
+        font-size: 22px;
+    }
+
+    .category-tile-label {
+        font-size: 18px;
+    }
+}
+/*Six Tiles*/
+.six-tiles .tile-box{
+    width: 100%;
+}
+.six-tiles .category-tiles-heading{
+    margin-bottom: 40px;
+}
+.six-tiles .category-tile{
+    max-width: 100%;
+    display: flex;
+    flex-direction: column;
+    aspect-ratio: unset;
+    overflow: hidden;
+}
+.six-tiles .category-tile-image{
+    position: unset;
+}
+.six-tiles .category-tile-label{
+    position: unset;
+}
+@media (max-width: 1024px){
+    .six-tiles .category-tiles-container{
+        flex-wrap: wrap;
+        flex-direction: row;
+    }
+    .six-tiles .tile-box{
+        flex: 1 0 calc(33.33% - 15px);
+    }
+}
+@media (max-width: 767px){
+    .six-tiles .tile-box{
+        flex: 1 0 calc(50% - 15px);
+    }
+}
+@media (max-width: 479px){
+    .six-tiles .tile-box{
+        flex: 1 0 calc(100% - 15px);
+    }
+}

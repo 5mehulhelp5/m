@@ -1,0 +1,170 @@
+"Process Identity is not set.","Process Identity is not set."
+"Export File is empty","Export File is empty"
+"Something went wrong","Something went wrong"
+"Amasty Export","Amasty Export"
+Export,Export
+"Failed to deploy to destination ""%1"". Error ""%2"". Please check your log file for more details","Failed to deploy to destination ""%1"". Error ""%2"". Please check your log file for more details"
+"There are no export results","There are no export results"
+"Entity ""%1"" already exists.","Entity ""%1"" already exists."
+"Fields Class should return ""%1"" interface result","Fields Class should return ""%1"" interface result"
+Append,Append
+"Attribute Set ID to Set Name","Attribute Set ID to Set Name"
+Capitalize,Capitalize
+"Capitalize Each Word","Capitalize Each Word"
+"Stock Id To Stock Name","Stock Id To Stock Name"
+"Category Entity Id To Names Path","Category Entity Id To Names Path"
+"Date Format","Date Format"
+"Default Value","Default Value"
+"Attribute Id To Code","Attribute Id To Code"
+"Option Value To Option Label","Option Value To Option Label"
+Explode,Explode
+"Full Match Replace","Full Match Replace"
+"Lower Case","Lower Case"
+Map,Map
+"Absolute Value","Absolute Value"
+"The numeric modifier '%1' cannot be applied to string values, please validate your data.","The numeric modifier '%1' cannot be applied to string values, please validate your data."
+Ceil,Ceil
+"Divided By","Divided By"
+Floor,Floor
+Minus,Minus
+Modulo,Modulo
+"Multiplied By","Multiplied By"
+Plus,Plus
+"Price in Base Currency","Price in Base Currency"
+"Round To","Round To"
+Truncate,Truncate
+Prepend,Prepend
+"Product ID To Product SKU","Product ID To Product SKU"
+"Product IDs To Product SKUs","Product IDs To Product SKUs"
+Replace,Replace
+"Replace First","Replace First"
+"Replace Text Wrapping","Replace Text Wrapping"
+With,With
+"Convert Store Code To Store Id","Convert Store Code To Store Id"
+"Convert Store Id To Store Code","Convert Store Id To Store Code"
+"Strip Html Tags","Strip Html Tags"
+"Apply Timezone","Apply Timezone"
+Trim,Trim
+"Upper Case","Upper Case"
+"Website Id to Website Code","Website Id to Website Code"
+"Custom Modifiers","Custom Modifiers"
+"Text Modifiers","Text Modifiers"
+"Numeric Modifiers","Numeric Modifiers"
+"Date Modifiers","Date Modifiers"
+"The system process failed. For an error details please make sure that Debug mode is enabled and see %1","The system process failed. For an error details please make sure that Debug mode is enabled and see %1"
+"Something went wrong while export. Please review logs","Something went wrong while export. Please review logs"
+"Something went wrong while export","Something went wrong while export"
+"File Path","File Path"
+"The file will be saved in Magento 'var' directory relative to this path.","The file will be saved in Magento 'var' directory relative to this path."
+"File Name on Server","File Name on Server"
+is,is
+"is not","is not"
+"more or equal","more or equal"
+"less or equal","less or equal"
+"greater than","greater than"
+"less than","less than"
+"is null","is null"
+"is not null","is not null"
+"last X days","last X days"
+"last X weeks","last X weeks"
+"Enter one value per line.","Enter one value per line."
+like,like
+"not like","not like"
+"is one of","is one of"
+"is not one of","is not one of"
+label,label
+"Fields Configuration","Fields Configuration"
+"Custom Entity Key","Custom Entity Key"
+Enabled,Enabled
+"Entity Key","Entity Key"
+"An additional name that is placed before the column name.","An additional name that is placed before the column name."
+"Output Entity Key","Output Entity Key"
+"Replace the name specified in the setting 'Entity Key'.","Replace the name specified in the setting 'Entity Key'."
+"Add %1 Fields","Add %1 Fields"
+"Add Selected Fields","Add Selected Fields"
+"Add Fields","Add Fields"
+"Delete Table","Delete Table"
+"Export File","Export File"
+name,name
+"Wrong file destination form class: %1","Wrong file destination form class: %1"
+"File Name","File Name"
+"Use {{date|format}} to customize filename. Example: Filename-{{date|Y_m_d_h_i_s}}. <a href=""https://www.php.net/manual/en/function.date.php"" target=""_blank"">Here</a> you may find more options for date format.","Use {{date|format}} to customize filename. Example: Filename-{{date|Y_m_d_h_i_s}}. <a href=""https://www.php.net/manual/en/function.date.php"" target=""_blank"">Here</a> you may find more options for date format."
+Filter,Filter
+"Exclude Parent Entity Row If No Results Found","Exclude Parent Entity Row If No Results Found"
+"Enable the setting to exclude parent entity row from the export file if the child entity doesn't have filter results relative to the parent entity.","Enable the setting to exclude parent entity row from the export file if the child entity doesn't have filter results relative to the parent entity."
+"Add Filter","Add Filter"
+"Field For Filtering","Field For Filtering"
+"Filter Condition","Filter Condition"
+"Filter After Modifier Applied","Filter After Modifier Applied"
+"Please make sure the field with a corresponding modifier is added to the export file. Otherwise, the setting won't be applied.","Please make sure the field with a corresponding modifier is added to the export file. Otherwise, the setting won't be applied."
+"Additional Actions","Additional Actions"
+"Can't build Ui Component configuration for %1 post processor: No meta given","Can't build Ui Component configuration for %1 post processor: No meta given"
+"Wrong post processor form class: %1","Wrong post processor form class: %1"
+"Export Template","Export Template"
+"File Type","File Type"
+"Wrong template form class: %1","Wrong template form class: %1"
+"Output File Encoding","Output File Encoding"
+"NOT LOGGED IN","NOT LOGGED IN"
+"ALL GROUPS","ALL GROUPS"
+"Add Header Row","Add Header Row"
+"Merge Rows into One","Merge Rows into One"
+"Data from multiple rows will be merged into one cell, if enabled.","Data from multiple rows will be merged into one cell, if enabled."
+"Merged Rows Data Delimiter","Merged Rows Data Delimiter"
+"The character that delimits each field of the child rows.","The character that delimits each field of the child rows."
+"Duplicate Parent Entity Data","Duplicate Parent Entity Data"
+"Please use the setting while exporting one sequence of subentity, e.g. Order - Order Item - Product - Product Attribute, to avoid duplicating independent data.","Please use the setting while exporting one sequence of subentity, e.g. Order - Order Item - Product - Product Attribute, to avoid duplicating independent data."
+"If enabled, parent entity data will be duplicated in each row when exporting the second and subsequent rows of child entity data.","If enabled, parent entity data will be duplicated in each row when exporting the second and subsequent rows of child entity data."
+"Field Delimiter","Field Delimiter"
+"The character that delimits each field of the rows.","The character that delimits each field of the rows."
+"Field Enclosure Character","Field Enclosure Character"
+"The character that encloses each field of the rows.","The character that encloses each field of the rows."
+"Entity Key Delimiter","Entity Key Delimiter"
+"The character that separates the entity key from the column name.","The character that separates the entity key from the column name."
+"XML Item Tag","XML Item Tag"
+Header,Header
+Footer,Footer
+"Xsl Template","Xsl Template"
+"Directory ""%1"" is not writable","Directory ""%1"" is not writable"
+"Process with specified identity ""%1"" not found.","Process with specified identity ""%1"" not found."
+"Unable to remove batch with ID %1. Error: %2","Unable to remove batch with ID %1. Error: %2"
+"Unable to remove batch. Error: %1","Unable to remove batch. Error: %1"
+"Process Started","Process Started"
+"The export process failed to launch. Please, check your PHP executable path or see log for more details.","The export process failed to launch. Please, check your PHP executable path or see log for more details."
+Continue,Continue
+Download,Download
+"Regenerate File","Regenerate File"
+"What is this?","What is this?"
+"Previous Page","Previous Page"
+"Next Page","Next Page"
+From,From
+To,To
+"Add Modifier","Add Modifier"
+Modifier,Modifier
+"Field Name","Field Name"
+"Field Name in Export File","Field Name in Export File"
+Action,Action
+"Static Field Value","Static Field Value"
+"-- Please Select --","-- Please Select --"
+Search,Search
+Add,Add
+"Amasty Extensions","Amasty Extensions"
+"Multi-Process Export","Multi-Process Export"
+"Enable Multi-Process Export","Enable Multi-Process Export"
+"The 'Multi-Process Export' feature requires the PHP extension 'pcntl' to be installed on the server. If you enable the feature and no performance boost happens, please ask your hoster/system administrator to check if the 'pcntl' extension is installed.","The 'Multi-Process Export' feature requires the PHP extension 'pcntl' to be installed on the server. If you enable the feature and no performance boost happens, please ask your hoster/system administrator to check if the 'pcntl' extension is installed."
+"Number of Parallel Processes","Number of Parallel Processes"
+"The more parallel processes are set, the faster the export process goes, but the higher the server loads.","The more parallel processes are set, the faster the export process goes, but the higher the server loads."
+Advanced,Advanced
+"Enable Debug Mode","Enable Debug Mode"
+"Enabling this setting will allow detecting errors and display detailed information about them including server errors. Also useful error information can be found in var/log/amasty_export_debug.log.","Enabling this setting will allow detecting errors and display detailed information about them including server errors. Also useful error information can be found in var/log/amasty_export_debug.log."
+"Process Status Check Mode","Process Status Check Mode"
+"If you encounter issues with tracking process status and unexpected errors during import or export in a multi-node environment, please select the 'Statuses' option in this setting.","If you encounter issues with tracking process status and unexpected errors during import or export in a multi-node environment, please select the 'Statuses' option in this setting."
+"Enable Export without Memory Limit","Enable Export without Memory Limit"
+"Enable this setting if export process terminates because of the memory limit exceed.","Enable this setting if export process terminates because of the memory limit exceed."
+"System Settings","System Settings"
+"CLI PHP Path","CLI PHP Path"
+"Current CLI PHP path of your Magento which is used by our extension when running the commands directly during the processing of PHP requests. To change it, please run bin/magento config:set amasty_base/system/cli_php_path %CLI_PHP_PATH% from the command line.","Current CLI PHP path of your Magento which is used by our extension when running the commands directly during the processing of PHP requests. To change it, please run bin/magento config:set amasty_base/system/cli_php_path %CLI_PHP_PATH% from the command line."
+CSV,CSV
+XML,XML
+"Store Exported File On Server","Store Exported File On Server"
+"Export Settings","Export Settings"
+"Select Entity","Select Entity"

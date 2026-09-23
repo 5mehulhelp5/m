@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Pro Functionality for Magento 2 (System)
+ */-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="codes">
+        <field name="template">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="additionalInfo" xsi:type="string" translate="true">
+                        <![CDATA[{L} - letter, {D} - digit<br/>
+                        e.g. PROMO_{L}{L}{D}{D}{D} results in PROMO_DF627<br/>
+                        If you're using barcode generation for gift card images, recommended maximum code length is 15 symbols. Otherwise, the optimal length is 20 symbols.]]>
+                    </item>
+                </item>
+            </argument>
+        </field>
+    </fieldset>
+</form>

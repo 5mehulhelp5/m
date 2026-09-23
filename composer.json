@@ -1,0 +1,140 @@
+{
+    "name": "magento/project-community-edition",
+    "description": "eCommerce Platform for Growth (Community Edition)",
+    "type": "project",
+    "license": [
+        "OSL-3.0",
+        "AFL-3.0"
+    ],
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true,
+        "allow-plugins": {
+            "cweagans/composer-patches": true,
+            "dealerdirect/phpcodesniffer-composer-installer": true,
+            "laminas/laminas-dependency-plugin": true,
+            "magento/composer-dependency-version-audit-plugin": true,
+            "magento/composer-root-update-plugin": true,
+            "magento/inventory-composer-installer": true,
+            "magento/magento-composer-installer": true,
+            "php-http/discovery": true
+        }
+    },
+    "require": {
+        "credova/module-financial": "^1.5",
+        "cweagans/composer-patches": "^1.7",
+        "dompdf/dompdf": "*",
+        "klaviyo/magento2-extension": "^4.4",
+        "magento/composer-root-update-plugin": "~2.0.5",
+        "magento/product-community-edition": "2.4.8-p4",
+        "mageplaza/magento-2-social-login": "^4.1",
+        "mageplaza/module-backend-reindex": "4.0.1",
+        "mageplaza/module-smtp": "^4.7",
+        "markshust/magento2-module-disabletwofactorauth": "^2.0",
+        "markshust/magento2-module-polyshell-patch": "^1.0",
+        "olegkoval/magento2-regenerate-url-rewrites": "^1.7",
+        "picqer/php-barcode-generator": "*",
+        "redchamps/module-guest-orders": "^2.0",
+        "redchamps/module-notification-bar": "^1.0"
+    },
+    "require-dev": {
+        "allure-framework/allure-phpunit": "~1.2.0",
+        "dealerdirect/phpcodesniffer-composer-installer": "*",
+        "friendsofphp/php-cs-fixer": "~3.76.0",
+        "lusitanian/oauth": "~0.8.10",
+        "magento/magento-coding-standard": "*",
+        "pdepend/pdepend": "~2.16.2",
+        "phpcompatibility/php-compatibility": "^9.3",
+        "phpmd/phpmd": "^2.15.0",
+        "phpstan/phpstan": "2.1.17",
+        "phpunit/phpunit": "^9",
+        "sebastian/phpcpd": "~6.0.3",
+        "squizlabs/php_codesniffer": "~3.5.4"
+    },
+    "conflict": {
+        "gene/bluefoot": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "Magento\\Framework\\": "lib/internal/Magento/Framework/",
+            "Magento\\Setup\\": "setup/src/Magento/Setup/",
+            "Magento\\": "app/code/Magento/",
+            "Zend\\Mvc\\Controller\\": "setup/src/Zend/Mvc/Controller/"
+        },
+        "psr-0": {
+            "": [
+                "app/code/",
+                "generated/code/"
+            ]
+        },
+        "files": [
+            "app/etc/NonComposerComponentRegistration.php"
+        ],
+        "exclude-from-classmap": [
+            "**/dev/**",
+            "**/update/**",
+            "**/Test/**"
+        ]
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Magento\\Sniffs\\": "dev/tests/static/framework/Magento/Sniffs/",
+            "Magento\\Tools\\": "dev/tools/Magento/Tools/",
+            "Magento\\Tools\\Sanity\\": "dev/build/publication/sanity/Magento/Tools/Sanity/",
+            "Magento\\TestFramework\\Inspection\\": "dev/tests/static/framework/Magento/TestFramework/Inspection/",
+            "Magento\\TestFramework\\Utility\\": "dev/tests/static/framework/Magento/TestFramework/Utility/",
+            "Magento\\PhpStan\\": "dev/tests/static/framework/Magento/PhpStan/"
+        }
+    },
+    "version": "2.4.8-p4",
+    "minimum-stability": "stable",
+    "repositories": {
+        "0": {
+            "type": "composer",
+            "url": "https://repo.magento.com/"
+        },
+        "magento": {
+            "type": "composer",
+            "url": "https://repo.magento.com"
+        },
+        "redchamps": {
+            "type": "composer",
+            "url": "https://repo.redchamps.com/repositories/marcus.sc@gmail.com-bW5Ba13Sn1lyp6aHIykF17l3NXhL8cjC"
+        }
+    },
+    "extra": {
+        "magento-force": "override",
+        "composer-exit-on-patch-failure": true,
+        "patches": {
+            "magento/framework": {
+                "VULN-39341-248-p5 APSB26-146 framework (md5: f99b056e3c58c00804e80ac9751336be)": "patches/composer/VULN-39341-248-p5-framework.patch"
+            },
+            "magento/magento2-base": {
+                "VULN-39341-248-p5 APSB26-146 magento2-base (md5: b00121254038d4ee719b270b1e49e3c1)": "patches/composer/VULN-39341-248-p5-magento2-base.patch"
+            },
+            "magento/module-backend": {
+                "VULN-39341-248-p5 APSB26-146 module-backend (md5: c37e3a1b88073ac55dd0c52f97fec005)": "patches/composer/VULN-39341-248-p5-module-backend.patch"
+            },
+            "magento/module-email": {
+                "VULN-39341-248-p5 APSB26-146 module-email (md5: 7ec5b816af3d2d209c53ed147439bf01)": "patches/composer/VULN-39341-248-p5-module-email.patch"
+            },
+            "magento/module-newsletter": {
+                "VULN-39341-248-p5 APSB26-146 module-newsletter (md5: ef4ece2e96c2c2d1c801050d38611b8a)": "patches/composer/VULN-39341-248-p5-module-newsletter.patch"
+            },
+            "magento/module-shipping": {
+                "AC-15210-USPS-REST-API-migration-shipping": "patches/composer/AC-15210-module-shipping.patch"
+            },
+            "magento/module-usps": {
+                "AC-15210-USPS-REST-API-migration-usps": "patches/composer/AC-15210-module-usps.patch",
+                "TEX-37 USPS OAuth token resilience (md5: 690e81883e27de886fb70d79b5325568)": "patches/composer/TEX-37-usps-oauth-token-resilience.patch"
+            }
+        }
+    },
+    "replace": {
+        "mageplaza/module-two-factor-authentication": "*",
+        "mageplaza/module-google-recaptcha": "*"
+    },
+    "scripts": {
+
+    }
+}

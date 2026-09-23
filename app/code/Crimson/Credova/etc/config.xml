@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Crimson Agility, LLC
+ */
+ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <payment>
+            <credovafinancial>
+                <display_product_page_no_product_config>1</display_product_page_no_product_config>
+            </credovafinancial>
+        </payment>
+    </default>
+</config>

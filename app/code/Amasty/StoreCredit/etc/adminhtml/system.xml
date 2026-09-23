@@ -1,0 +1,158 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <section id="amstorecredit" translate="label" type="text" sortOrder="192003" showInDefault="1" showInWebsite="1"
+                 showInStore="1">
+            <class>separator-top</class>
+            <label>Store Credit</label>
+            <tab>amasty</tab>
+            <resource>Amasty_StoreCredit::config</resource>
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>General</label>
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="refund_automatically" translate="label" type="select" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Refund Store Credit Automatically</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <tooltip>Refund to Store Credit option will be selected by default on the credit memo page</tooltip>
+                </field>
+                <field id="allow_on_tax" translate="label" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Allow applying Store Credit on Tax</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="allow_on_shipping" translate="label" type="select" sortOrder="40" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Allow applying Store Credit on Shipping</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="transactions_log_cleaning" translate="label tooltip" type="select" sortOrder="50" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Transactions Log Auto-Cleaning </label>
+                    <tooltip><![CDATA[The records that were saved for a longer period than the specified below will be automatically removed from Transactions Log,
+                     and customer credit data will also be deleted from the Customers ‘Store Credit & Refunds’ grid.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <frontend_model>Amasty\StoreCredit\Config\TransactionLogCleaning</frontend_model>
+                </field>
+                <field id="transactions_log_period" translate="label tooltip" type="text" sortOrder="60" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Auto-Cleaning Period (Days)</label>
+                    <tooltip>The records will be automatically removed after the specified period of time.</tooltip>
+                    <validate>required-entry validate-number validate-greater-than-zero validate-digits</validate>
+                    <depends>
+                        <field id="transactions_log_cleaning">1</field>
+                    </depends>
+                </field>
+            </group>
+
+            <group id="usage" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Usage Configuration</label>
+
+                <field id="restrict" translate="label comment" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Apply Store Credit to Specific Products</label>
+                    <comment>Select 'Yes' to make the store credit applicable to specific products.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="action" translate="label" type="select" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Action</label>
+                    <source_model>Amasty\StoreCredit\Model\Source\RestrictAction</source_model>
+                    <depends>
+                        <field id="restrict">1</field>
+                    </depends>
+                </field>
+
+                <field id="skus" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>SKU</label>
+                    <tooltip>Enter the details in either SKU or Category ID field to make this feature work. Otherwise, it’ll be ignored and store credit will be applied to all products.</tooltip>
+                    <depends>
+                        <field id="restrict">1</field>
+                    </depends>
+                    <backend_model>Amasty\StoreCredit\Model\Config\Backend\Restrict\Skus</backend_model>
+                </field>
+
+                <field id="category_ids" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Category ID</label>
+                    <tooltip>Enter the details in either SKU or Category ID field to make this feature work. Otherwise, it’ll be ignored and store credit will be applied to all products.</tooltip>
+                    <depends>
+                        <field id="restrict">1</field>
+                    </depends>
+                    <backend_model>Amasty\StoreCredit\Model\Config\Backend\Restrict\Categories</backend_model>
+                </field>
+
+                <field id="use_tooltip" translate="label comment" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Add Tooltip in Store Credit Block</label>
+                    <comment>Add a tooltip in the Store Credit block that will notify customers about details of Usage Configuration.</comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="tooltip_text" translate="label" type="textarea" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Tooltip Text</label>
+                    <comment>Specify the message of the tooltip in this block. Limited to 500 symbols.</comment>
+                    <validate>required-entry validate-length maximum-length-500</validate>
+                    <depends>
+                        <field id="use_tooltip">1</field>
+                    </depends>
+                </field>
+
+                <field id="encourage" translate="label comment" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Encourage Using Store Credit</label>
+                    <comment>If set to ‘Yes’, the system will encourage customers to apply as much store credit as possible. </comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+
+            <group id="email" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1"
+                   showInStore="1">
+                <label>Email Notification</label>
+
+                <field id="enabled" translate="label" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="1" showInStore="1">
+                    <label>Enable Store Credit Balance Update Email</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="actions" translate="label" type="multiselect" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Send Email Actions</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Amasty\StoreCredit\Model\History\MessageProcessor</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+                <field id="sender" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Credit Update Email Sender</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="reply" translate="label" type="select" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Store Credit Reply To</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Identity</source_model>
+                </field>
+                <field id="template" translate="label" type="select" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1" canRestore="1">
+                    <label>Email Template</label>
+                    <depends>
+                        <field id="enabled">1</field>
+                    </depends>
+                    <source_model>Magento\Config\Model\Config\Source\Email\Template</source_model>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

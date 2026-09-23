@@ -1,0 +1,274 @@
+<?php
+/**
+ * Credova Js
+ *
+ * Crimson Agility, LLC
+ */
+/**
+ * @var Magento\Framework\View\Element\Template $block
+ */
+
+/** @var Crimson\Credova\Helper\Config $configHelper */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+$configHelper = $this->helper(\Credova\Financial\Helper\Config::class);
+$active               = $configHelper->getCredovaActive();
+$credova_api_username = $configHelper->getApiUsername();
+$min_amount           = $configHelper->getCredovaMinimumAmount();
+$max_amount           = $configHelper->getCredovaMaximumAmount();
+$diplay_product_page  = $configHelper->getCredovaProductPageDisplay();
+$diplay_category_page  = $configHelper->getCredovaCategoryPageDisplay();
+$env  = $configHelper->getCredovaEnvironment();
+$AslowasOnMiniCart  = $configHelper->getCredovaAslowasOnMiniCart();
+$white_logo  = $configHelper->getCredovaWhiteLogoEnable();
+$hide_brand  = $configHelper->getCredovaHideBrand();
+$popup_type  = $configHelper->getCredovaPopupType();
+
+if ($env == 0) {
+    $env = 'Production';
+} else {
+    $env = 'Sandbox';
+}
+
+/** @var \Credova\Financial\Block\CurrentProduct $blockObj */
+$blockObj= $block->getLayout()->createBlock('Credova\Financial\Block\CurrentProduct');
+$CredovaVersion = $block->getLayout()->createBlock('Credova\Financial\Block\Adminhtml\System\Config\Form\Field\Label');
+$version = $CredovaVersion->getModuleVersion();
+$currentProduct_display = 0;
+$product_display_regardless = 0;
+if ($blockObj->getCurrentProductPage() == 1) {
+    /** @var \Magento\Catalog\Model\Product $currentProduct */
+    $currentProduct = $blockObj->getCurrentProduct();
+    $currentProduct_display = $currentProduct->getCredovaDisplay();
+    $product_display_regardless = $configHelper->getCredovaProductPageDisplayRegardlessOfProductSetting();
+}?>
+
+<?php if ($AslowasOnMiniCart == 1) { ?>
+
+<?php } ?>
+
+<?php
+if ($active == 1  && $diplay_product_page == 1 && $credova_api_username) {
+    ?>
+<?php
+$scriptString = "
+    require(['jquery'], function($) {
+        var \$credova=jQuery.noConflict();
+        \$credova(document).ready(function() {
+            CRDV.plugin.config( {
+                environment: CRDV.Environment.{$env}, store: \"{$credova_api_username}\", minAmount: \"{$min_amount}\", maxAmount: \"{$max_amount}\", type:\"{$popup_type}\"
+            }
+
+            );
+";
+?>
+            <?php if ($currentProduct_display == 1 || $product_display_regardless) { ?>
+<?php
+$scriptString .= "
+            if (\$credova('.catalog-product-view').length > 0) {
+                var __PRICE=\$credova('.product-info-main span.price').text().replace(/,\s?/g, \"\");
+                var __FINAL_PRICE=parseFloat(__PRICE.substring(1, __PRICE.length));
+
+                jQuery(\"body\").on(\"click\", \".swatch-option\", function(){
+                    var __PRICE=\$credova('.product-info-main span.price').text().replace(/,\s?/g, \"\");
+                    var __FINAL_PRICE=parseFloat(__PRICE.substring(1, __PRICE.length));
+                    if (__FINAL_PRICE >= \"{$min_amount}\" && __FINAL_PRICE <= \"{$max_amount}\") {
+                        if (\$credova('.credova-response-amount').length==1) {
+                            \$credova(\".crdv-button\").remove();
+                            // \$credova('.product-info-main .price-box.price-final_price').after('<div class=\"credova-response-amount\"></div>');
+                            \$credova(\".credova-response-amount\").attr('data-amount', __FINAL_PRICE);
+                            \$credova(\".credova-response-amount\").attr('data-type', \"{$popup_type}\");
+";
+?>
+                            <?php if ($hide_brand == 1) { ?>
+<?php
+$scriptString .= "
+                                \$credova(\".credova-response-amount\").attr('data-hide-brand', 'true');
+";
+?>
+                            <?php } ?>
+                            <?php if ($white_logo == 1) { ?>
+<?php
+$scriptString .= "
+                                \$credova(\".credova-response-amount\").attr(\"id\",\"credova_white\");
+";
+?>
+                            <?php } ?>
+<?php
+$scriptString .= "
+                            // if (!localStorage.getItem('credovaPublicId')) {
+                            CRDV.plugin.inject(\"credova-response-amount\");
+                            CRDV.plugin.addEventListener(function (e) {
+                                if (e.eventName === CRDV.EVENT_USER_WAS_APPROVED) {
+                                    localStorage.setItem('credovaPublicId', e.eventArgs.publicId)
+                                    \$credova.cookieStorage.set('credovaPublicId', e.eventArgs.publicId);
+                                }
+                            });
+                        // }
+                        }
+                    }
+                });
+
+                if (__FINAL_PRICE >= \"{$min_amount}\" && __FINAL_PRICE <= \"{$max_amount}\") {
+                    if (\$credova('.credova-response-amount').length==0) {
+                        \$credova('.product-info-main .price-box.price-final_price').after('<div class=\"credova-response-amount\"></div>');
+                        \$credova(\".credova-response-amount\").attr('data-amount', __FINAL_PRICE);
+                        \$credova(\".credova-response-amount\").attr('data-type', \"{$popup_type}\");
+";
+?>
+                        <?php if ($hide_brand == 1) { ?>
+<?php
+$scriptString .= "
+                            \$credova(\".credova-response-amount\").attr('data-hide-brand', 'true');
+";
+?>
+                        <?php } ?>
+                        <?php if ($white_logo == 1) { ?>
+<?php
+$scriptString .= "
+                            \$credova(\".credova-response-amount\").attr(\"id\",\"credova_white\");
+";
+?>
+                        <?php } ?>
+<?php
+$scriptString .= "
+                        // if (!localStorage.getItem('credovaPublicId')) {
+                        CRDV.plugin.inject(\"credova-response-amount\");
+                        CRDV.plugin.addEventListener(function (e) {
+                            if (e.eventName === CRDV.EVENT_USER_WAS_APPROVED) {
+                                localStorage.setItem('credovaPublicId', e.eventArgs.publicId)
+                                \$credova.cookieStorage.set('credovaPublicId', e.eventArgs.publicId);
+                            }
+                        });
+                    // }
+                    }
+                }
+            }
+";
+?>
+            <?php } ?>
+           <?php if ($diplay_category_page == 1) {?>
+<?php
+$scriptString .= "
+            /* For Category Pages */
+            if (\$credova('.catalog-category-view').length > 0) {
+                    \$credova(\".credova-as-low-as\").each(function(index, element) {
+                        var __FINAL_PRICE=\$credova(this).attr(\"data-price\");
+                        var ID = \$credova(this).attr(\"id\");
+                        if (__FINAL_PRICE >= {$min_amount} && __FINAL_PRICE <= {$max_amount}) {
+                            \$credova('#' + ID).after('<div class=\"' + ID + '\"></div>');
+                            \$credova(\".\" + ID).attr('data-amount', __FINAL_PRICE);
+                            \$credova(\".\" + ID).attr('data-type', \"{$popup_type}\");
+";
+?>
+                            <?php if ($hide_brand == 1) { ?>
+<?php
+$scriptString .= "
+                                \$credova(\".\" + ID).attr('data-hide-brand', 'true');
+";
+?>
+                            <?php } ?>
+                            <?php if ($white_logo == 1) { ?>
+<?php
+$scriptString .= "
+                                \$credova(\".\" + ID).attr(\"id\",\"credova_white\");
+";
+?>
+                            <?php } ?>
+<?php
+$scriptString .= "
+                            // if (!localStorage.getItem('credovaPublicId')) {
+                            CRDV.plugin.inject(ID);
+                            CRDV.plugin.addEventListener(function (e) {
+                                if (e.eventName === CRDV.EVENT_USER_WAS_APPROVED) {
+                                    localStorage.setItem('credovaPublicId', e.eventArgs.publicId)
+                                    \$credova.cookieStorage.set('credovaPublicId', e.eventArgs.publicId);
+                                }
+                            });
+                        }
+                    });
+                }
+";
+?>
+            <?php } ?>
+<?php
+$scriptString .= "
+            });
+        }
+        );
+console.log('Credova Module Version {$version}');
+";
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+<?php
+$styleString = <<<style
+.product-info-main .product-info-price .price-box {
+    display: inline-block;
+        width: auto;
+}
+.product-info-main .product-info-stock-sku {
+    padding: 0;
+}
+.crdv-button {
+}
+.credova-response-amount {
+    font-size: 16px;
+    color: rgb(33, 150, 243);
+    /* border-bottom: 1px solid #E6E6E6; */
+    /* border-top: 1px solid #E6E6E6; */
+    padding: 6px 12px;
+    /* background: #fff; */
+    /* border-left: 1px solid #E6E6E6;
+    border-right: 1px solid #E6E6E6;
+    box-shadow: 0 0 2px #ccc; */
+    /* float:left; */
+    display: block;
+}
+span.crdv-button-brand {
+    background-size: 78px 13px!important;
+    width: 85px!important;
+    background-position: bottom!important;
+}
+span.crdv-button-message {
+    font-size: 15px;
+}
+#credova_white .crdv-button {
+    color: #FFF7EE !important;
+    background-color: transparent !important;
+    text-decoration: none !important;
+}
+#credova_white .crdv-brand {
+    fill: #FFF7EE;
+}
+
+.aslow-as-minicart a:nth-child(2) {
+    display: none;
+}
+
+.aslow-as-minicart a:nth-child(4) {
+    display: none;
+}
+
+.aslow-as-minicart a:nth-child(5) {
+    display: none;
+}
+.aslow-as-minicart a:nth-child(6) {
+    display: none;
+}
+
+.aslow-as-minicart .price {
+    display: none;
+}
+#count_items {
+    display: none;
+}
+
+.aslow-ascart .crdv-button {
+    background-color: transparent;
+}
+
+style;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('style', [], $styleString, false); ?>
+    <?php
+}
+?>

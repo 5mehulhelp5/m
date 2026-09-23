@@ -1,0 +1,86 @@
+"Submit Order","Submit Order"
+"Send Order Link","Send Order Link"
+"Are you sure you want to cancel this order?","Are you sure you want to cancel this order?"
+Cancel,Cancel
+"No item found in order.","No item found in order."
+"Quick Pay link has been sent successfully at customer's email.","Quick Pay link has been sent successfully at customer's email."
+"You created the order.","You created the order."
+"Order saving error: %1","Order saving error: %1"
+Login,Login
+"Invalid user! Please %1 with %2 customer.","Invalid user! Please %1 with %2 customer."
+"Invalid customer! Please %1 with %2 customer.","Invalid customer! Please %1 with %2 customer."
+Name,Name
+Price,Price
+"Shipping & Handling Charges","Shipping & Handling Charges"
+Discount,Discount
+"Tax Amount","Tax Amount"
+"Grand Total","Grand Total"
+"Not allowed to edit service product.","Not allowed to edit service product."
+"No Payment Methods","No Payment Methods"
+Action,Action
+"Click To Add","Click To Add"
+Add,Add
+"Click To Remove","Click To Remove"
+Remove,Remove
+Product,Product
+Qty,Qty
+Subtotal,Subtotal
+"Row Subtotal","Row Subtotal"
+"No ordered items","No ordered items"
+"Update Items and Quantities","Update Items and Quantities"
+"Total %1 product(s)","Total %1 product(s)"
+Subtotal:,Subtotal:
+SKU,SKU
+"Tier Pricing","Tier Pricing"
+"Custom Price","Custom Price"
+Apply,Apply
+"Please select","Please select"
+"Move to Shopping Cart","Move to Shopping Cart"
+"Move to Wish List","Move to Wish List"
+"Order Totals","Order Totals"
+"Append Comments","Append Comments"
+"Email Order Confirmation","Email Order Confirmation"
+"Allowed Extensions: jpg, jpeg, gif, png, pdf","Allowed Extensions: jpg, jpeg, gif, png, pdf"
+"Hi %1","Hi %1"
+"Review Your Order Items","Review Your Order Items"
+Attachment,Attachment
+"Review Order Items","Review Order Items"
+"Order Items","Order Items"
+"Product Name","Product Name"
+"In Stock","In Stock"
+"Out of Stock","Out of Stock"
+"Shipping &amp; Handling Charges","Shipping &amp; Handling Charges"
+"Additional Order Comments","Additional Order Comments"
+"Complete Order","Complete Order"
+"Add to Cart","Add to Cart"
+"Proceed to Pay","Proceed to Pay"
+"This order is already completed.","This order is already completed."
+"Quick Pay For Order","Quick Pay For Order"
+"Hi,","Hi,"
+Item,Item
+Sku,Sku
+"Click Here To Complete Your Order","Click Here To Complete Your Order"
+"Select Shipping Method First","Select Shipping Method First"
+"Select Payment Methods to allow at checkout page","Select Payment Methods to allow at checkout page"
+"Add Products","Add Products"
+"Add Service Product","Add Service Product"
+Close,Close
+Save,Save
+"Name and Price fields are required","Name and Price fields are required"
+"You have item changes","You have item changes"
+"Allow all payment methods at checkout","Allow all payment methods at checkout"
+"Allow all shipping methods at checkout","Allow all shipping methods at checkout"
+"Click Here To Download Attachment","Click Here To Download Attachment"
+"I would like to inform you that your order is ready to complete","I would like to inform you that your order is ready to complete"
+"Quote not found.","Quote not found."
+"Gift Wrapping for Order","Gift Wrapping for Order"
+"Note: Existing cart products will be removed to complete this order","Note: Existing cart products will be removed to complete this order"
+"and please make sure to complete this order once you clicks on the Proceed to Pay button","and please make sure to complete this order once you clicks on the Proceed to Pay button"
+"You are not able to add items in this quote","You are not able to add items in this quote"
+"You are not allowed to update this quote items.","You are not allowed to update this quote items."
+"Unable to complete this order because quote products are removed","Unable to complete this order because quote products are removed"
+"Switch currency to %1 to complete this order","Switch currency to %1 to complete this order"
+"Quick Pay","Quick Pay"
+"Quick Pay order Email","Quick Pay order Email"
+"General Settings","General Settings"
+"You can complete this order by using %1 currency only.","You can complete this order by using %1 currency only."

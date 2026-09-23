@@ -1,0 +1,79 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\StoreCredit\Api\ManageCustomerStoreCreditInterface" type="Amasty\StoreCredit\Model\StoreCredit\ManageCustomerStoreCredit"/>
+    <preference for="Amasty\StoreCredit\Api\StoreCreditRepositoryInterface" type="Amasty\StoreCredit\Model\StoreCredit\StoreCreditRepository"/>
+    <preference for="Amasty\StoreCredit\Api\Data\HistoryInterface" type="Amasty\StoreCredit\Model\History\History"/>
+    <preference for="Amasty\StoreCredit\Api\HistoryRepositoryInterface" type="Amasty\StoreCredit\Model\History\HistoryRepository"/>
+    <preference for="Amasty\StoreCredit\Api\ApplyStoreCreditToQuoteInterface" type="Amasty\StoreCredit\Model\StoreCredit\ApplyStoreCreditToQuote"/>
+    <preference for="Amasty\StoreCredit\Model\History\Repository\GetHistoryAdminNameInterface"
+                type="Amasty\StoreCredit\Model\History\Repository\GetHistoryAdminNameDummy" />
+
+    <virtualType name="Magento\Sales\Model\ResourceModel\Order\Grid" type="Magento\Sales\Model\ResourceModel\Grid">
+        <arguments>
+            <argument name="columns" xsi:type="array">
+                <item name="amstorecredit_refunded_amount" xsi:type="string">sales_order.amstorecredit_refunded_amount</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Magento\Quote\Model\Quote">
+        <plugin name="AmastyResetStoreCredit" type="Amasty\StoreCredit\Plugin\ResetStoreCreditAfterItemDelete"/>
+    </type>
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="Amasty_StoreCredit::SetStoreCreditData" type="Amasty\StoreCredit\Plugin\Quote\Model\Quote\Item\ToOrderItem\SetStoreCreditData"/>
+    </type>
+
+    <type name="Amasty\StoreCredit\Model\Total\Quote\MaxStoreCredit\RetrieveStrategyPool">
+        <arguments>
+            <argument name="defaultStrategy" xsi:type="object">Amasty\StoreCredit\Model\Total\Quote\MaxStoreCredit\FullStrategy\Proxy</argument>
+            <argument name="retrievers" xsi:type="array">
+                <item name="0" xsi:type="object">Amasty\StoreCredit\Model\Total\Quote\MaxStoreCredit\FullStrategy\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\StoreCredit\Model\Total\Quote\Collectors\QuoteCollector">
+        <arguments>
+            <argument name="defaultCollector" xsi:type="object">Amasty\StoreCredit\Model\Total\Quote\Collectors\StorefrontCollector</argument>
+            <argument name="collectors" xsi:type="array">
+                <item name="adminhtml" xsi:type="object">Amasty\StoreCredit\Model\Total\Quote\Collectors\AdminhtmlCollector</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\StoreCredit\Model\Config\Backend\Restrict\Entity">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="dataPersistor" xsi:type="object">Magento\Framework\App\Request\DataPersistorInterface</item>
+                <item name="utils" xsi:type="object">Amasty\StoreCredit\Model\Config\Utils</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <virtualType name="Amasty\StoreCredit\Model\Config\Backend\Restrict\Skus" type="Amasty\StoreCredit\Model\Config\Backend\Restrict\Entity">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="filterModel" xsi:type="object">Amasty\StoreCredit\Model\ResourceModel\FilterSkus</item>
+                <item name="persistentName" xsi:type="string">amasty_storecredit_config_skus</item>
+                <item name="errorMessage" xsi:type="string">The following SKUs are invalid: %1.</item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <virtualType name="Amasty\StoreCredit\Model\Config\Backend\Restrict\Categories" type="Amasty\StoreCredit\Model\Config\Backend\Restrict\Entity">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="filterModel" xsi:type="object">Amasty\StoreCredit\Model\ResourceModel\FilterCategories</item>
+                <item name="persistentName" xsi:type="string">amasty_storecredit_config_categories</item>
+                <item name="errorMessage" xsi:type="string">The following Category IDs are invalid: %1.</item>
+            </argument>
+        </arguments>
+    </virtualType>
+</config>

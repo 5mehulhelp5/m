@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Magento\Sales\Controller\Adminhtml\Order\Create\Save" type="Webkul\QuickPayForOrder\Controller\Adminhtml\Order\Create\Save" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create" type="Webkul\QuickPayForOrder\Block\Adminhtml\Order\Create" />
+    <preference for="Magento\Sales\Block\Adminhtml\Order\Create\Search\Grid" type="Webkul\QuickPayForOrder\Block\Adminhtml\Order\Create\Search\Grid" />
+    <type name="Magento\Catalog\Controller\Adminhtml\Product\Edit">
+        <plugin name="beforeProductEdit" type="Webkul\QuickPayForOrder\Plugin\Controller\Product\Edit"/>
+    </type>
+</config>

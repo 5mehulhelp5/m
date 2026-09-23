@@ -1,0 +1,47 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Import Core for Magento 2 (System)
+ */-->
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+  <table name="amasty_import_batch" resource="default" engine="innodb" comment="amasty_import_batch">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created_at"/>
+    <column xsi:type="varchar" name="process_identity" nullable="false" length="127" comment="Process_identity"/>
+    <column xsi:type="longblob" name="batch_data" nullable="false" comment="Batch_data"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <index referenceId="AMASTY_IMPORT_BATCH_PROCESS_IDENTITY" indexType="btree">
+      <column name="process_identity"/>
+    </index>
+  </table>
+  <table name="amasty_import_process" resource="default" engine="innodb" comment="amasty_import_process">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="entity_code" nullable="false" length="127" comment="Entity_code"/>
+    <column xsi:type="longblob" name="profile_config" nullable="false" comment="Profile_config"/>
+    <column xsi:type="varchar" name="identity" nullable="false" length="127" comment="Identity"/>
+    <column xsi:type="int" name="pid" padding="11" unsigned="false" nullable="true" identity="false" comment="Pid"/>
+    <column xsi:type="varchar" name="status" nullable="false" length="127" comment="Status"/>
+    <column xsi:type="boolean" name="finished" nullable="false" comment="Finished"/>
+    <column xsi:type="blob" name="import_result" nullable="true" comment="Import_result"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+    <constraint xsi:type="unique" referenceId="AMASTY_IMPORT_PROCESS_IDENTITY">
+      <column name="identity"/>
+    </constraint>
+  </table>
+  <table name="amasty_import_file_upload_map" resource="default" engine="innodb" comment="amasty_import_file_upload_map">
+    <column xsi:type="int" name="id" padding="10" unsigned="true" nullable="false" identity="true" comment="Id"/>
+    <column xsi:type="varchar" name="filename" nullable="false" length="32" comment="Filename"/>
+    <column xsi:type="varchar" name="fileext" nullable="false" length="32" comment="Fileext"/>
+    <column xsi:type="varchar" name="hash" nullable="false" length="32" comment="Hash"/>
+    <column xsi:type="timestamp" name="created_at" on_update="false" nullable="false" default="CURRENT_TIMESTAMP" comment="Created_at"/>
+    <constraint xsi:type="primary" referenceId="PRIMARY">
+      <column name="id"/>
+    </constraint>
+  </table>
+</schema>

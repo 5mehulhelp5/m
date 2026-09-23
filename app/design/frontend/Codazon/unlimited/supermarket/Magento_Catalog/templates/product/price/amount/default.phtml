@@ -1,0 +1,99 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+?>
+
+<?php /** @var $block \Magento\Framework\Pricing\Render\Amount */ ?>
+<?php
+$product = $block->getSaleableItem();
+$validUntil = date('Y-m-d', strtotime('+1 year'));
+
+if ($product && $product->getSpecialToDate()) {
+    $validUntil = date('Y-m-d', strtotime($product->getSpecialToDate()));
+}
+?>
+<span class="price-container <?= $block->escapeHtmlAttr($block->getAdjustmentCssClasses()) ?>"
+        <?= $block->getSchema() ? ' itemprop="offers" itemscope itemtype="http://schema.org/Offer"' : '' ?>>
+    <?php if ($block->getDisplayLabel()) :?>
+        <span class="price-label"><?= $block->escapeHtml($block->getDisplayLabel()) ?></span>
+    <?php endif; ?>
+    <span <?php if ($block->getPriceId()) :?> id="<?= $block->escapeHtmlAttr($block->getPriceId()) ?>"<?php endif;?>
+        <?= ($block->getPriceDisplayLabel()) ? 'data-label="' . $block->escapeHtmlAttr($block->getPriceDisplayLabel() . $block->getPriceDisplayInclExclTaxes()) . '"' : '' ?>
+        data-price-amount="<?= $block->escapeHtmlAttr($block->getDisplayValue()) ?>"
+        data-price-type="<?= $block->escapeHtmlAttr($block->getPriceType()) ?>"
+        class="price-wrapper <?= $block->escapeHtmlAttr($block->getPriceWrapperCss()) ?>"
+    ><?= $block->escapeHtml($block->formatCurrency($block->getDisplayValue(), (bool)$block->getIncludeContainer()), ['span']) ?></span>
+    <?php if ($block->hasAdjustmentsHtml()) :?>
+        <?= $block->getAdjustmentsHtml() ?>
+    <?php endif; ?>
+    <?php if ($block->getSchema()) :?>
+        <meta itemprop="price" content="<?= $block->escapeHtmlAttr($block->getDisplayValue()) ?>" />
+        <meta itemprop="priceCurrency" content="<?= $block->escapeHtmlAttr($block->getDisplayCurrencyCode()) ?>" />
+        <meta itemprop="priceValidUntil" content="<?= $block->escapeHtmlAttr($validUntil) ?>" />
+    <?php endif; ?>
+    <?php if ($block->getSaleableItem() && $block->getSaleableItem()->isSaleable()): ?>
+        <link itemprop="availability"
+              href="https://schema.org/InStock" />
+    <?php else: ?>
+        <link itemprop="availability"
+              href="https://schema.org/OutOfStock" />
+    <?php endif; ?>
+    <div itemprop="shippingDetails"
+        itemscope
+        itemtype="https://schema.org/OfferShippingDetails">
+
+        <div itemprop="shippingRate"
+            itemscope
+            itemtype="https://schema.org/MonetaryAmount">
+            <meta itemprop="value" content="5.00" />
+            <meta itemprop="currency" content="USD" />
+        </div>
+
+        <div itemprop="shippingDestination"
+            itemscope
+            itemtype="https://schema.org/DefinedRegion">
+            <meta itemprop="addressCountry" content="US" />
+        </div>
+
+        <div itemprop="deliveryTime"
+            itemscope
+            itemtype="https://schema.org/ShippingDeliveryTime">
+
+            <div itemprop="handlingTime"
+                itemscope
+                itemtype="https://schema.org/QuantitativeValue">
+                <meta itemprop="minValue" content="0" />
+                <meta itemprop="maxValue" content="1" />
+                <meta itemprop="unitCode" content="DAY" />
+            </div>
+
+            <div itemprop="transitTime"
+                itemscope
+                itemtype="https://schema.org/QuantitativeValue">
+                <meta itemprop="minValue" content="3" />
+                <meta itemprop="maxValue" content="5" />
+                <meta itemprop="unitCode" content="DAY" />
+            </div>
+
+        </div>
+    </div>
+    <div itemprop="hasMerchantReturnPolicy"
+        itemscope
+        itemtype="https://schema.org/MerchantReturnPolicy">
+
+        <meta itemprop="applicableCountry" content="US" />
+
+        <link itemprop="returnPolicyCategory"
+            href="https://schema.org/MerchantReturnFiniteReturnWindow" />
+
+        <meta itemprop="merchantReturnDays" content="30" />
+
+        <link itemprop="returnMethod"
+            href="https://schema.org/ReturnByMail" />
+
+        <link itemprop="returnFees"
+            href="https://schema.org/FreeReturn" />
+    </div>
+</span>

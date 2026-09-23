@@ -1,0 +1,159 @@
+<?php
+
+
+/**
+ * Credova Js
+ *
+ * @category  Credova
+ * @package   Credova_Financial
+ * @author    Credova <info@credova.com>
+ * @copyright 2019 Credova
+ * @license   http://opensource.org/licenses/osl-3.0.php (OSL 3.0)
+ * @link https://credova.com/
+ */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+$configHelper         = $block->getLayout()->createBlock('Credova\Financial\Block\Storeblock')->getStoreBlockData();
+$active               = $configHelper['active'];
+$credova_api_username = $configHelper['credova_api_username'];
+$min_amount           = $configHelper['min_amount'];
+$max_amount           = $configHelper['max_amount'];
+$env  = $configHelper['env'];
+
+$onepageBlock = $block->getLayout()->createBlock('Magento\Checkout\Block\Onepage');
+$currentFullAction = $block->getRequest()->getFullActionName();
+
+if ($currentFullAction == 'multishipping_checkout_overview') {
+?>
+<?php
+$scriptString = <<<script
+        window.checkoutConfig = {$onepageBlock->getSerializedCheckoutConfig()};
+        window.isCustomerLoggedIn = window.checkoutConfig.isCustomerLoggedIn;
+        window.customerData = window.checkoutConfig.customerData;
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+    <?php
+}
+if ($env == 0) {
+    $env = 'Production';
+} else {
+    $env = 'Sandbox';
+}
+
+if ($active == 1 && $credova_api_username) {
+    if ($currentFullAction != 'multishipping_checkout_overview') {
+    ?>
+<?php
+$scriptString = <<<script
+            require(['jquery'], function($) {
+                if (!localStorage.getItem('setStore')) {
+                    localStorage.setItem('setStore', "{$credova_api_username}");
+                    localStorage.setItem('setEnv', "{$env}");
+                }
+            });
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+    <?php } else { ?>
+<?php
+$scriptString = <<<script
+            require(['jquery', 'Magento_Checkout/js/model/quote',
+                    'Magento_Checkout/js/model/full-screen-loader',
+                    'Magento_Checkout/js/model/url-builder',
+                    'mage/storage'
+                ],
+                function($, quote, fullScreenLoader, urlBuilder, storage) {
+                    if (!localStorage.getItem('setStore')) {
+                        localStorage.setItem('setStore', "{$credova_api_username}");
+                        localStorage.setItem('setEnv', "{$env}");
+                    }
+                    var \$credova = jQuery.noConflict();
+                    \$credova(document).ready(function() {
+                        var checkout_flow = window.checkoutConfig.payment.credovafinancial.checkout_flow;
+                        CRDV.plugin.config({
+                            environment: CRDV.Environment.{$env},
+                            store: "{$credova_api_username}",
+                            minAmount: "{$min_amount}",
+                            maxAmount: "{$max_amount}",
+                            type: checkout_flow
+                        });
+                        if (\$credova('.multishipping-checkout-overview').length > 0) {
+                            console.log("Credova Multiship Started");
+                            var __PRICE = \$credova('.checkout-review span.price').text().replace(/,\s?/g, "");
+                            var __FINAL_PRICE = parseFloat(__PRICE.substring(1, __PRICE.length));
+
+                            if (__FINAL_PRICE > "{$min_amount}" &&
+                                __FINAL_PRICE < "{$max_amount}") {
+                                if (\$credova('.payment-method dt').html() == 'Credova Financial') {
+
+                                    \$credova('form#review-order-form .submit').click(function(event) {
+                                        event.preventDefault();
+
+                                        fullScreenLoader.startLoader();
+
+                                        if (\$credova('.checkout-agreements').find('input[type="checkbox"]:not(:checked)').length > 0) {
+                                            alert('Please check the terms and conditions checkbox.');
+                                            return false;
+                                        }
+
+                                        const billingAddress = quote.billingAddress();
+                                        var default_billing = window.checkoutConfig.customerData.default_billing;
+                                        var billingData = window.checkoutConfig.customerData.addresses[default_billing];
+                                        const publicId = localStorage.getItem('credovaPublicId');
+
+                                        if (publicId !== null) {
+                                            // this.publicId(publicId);
+                                        }
+
+                                        storage.post(
+                                            urlBuilder.createUrl('/credova/createApplication', {}),
+                                            JSON.stringify({
+                                                "applicationInfo": {
+                                                    "first_name": billingData.firstname,
+                                                    "last_name": billingData.lastname,
+                                                    "phone_number": billingData.telephone,
+                                                    "email": window.customerData.email,
+                                                    "public_id": publicId
+                                                }
+                                            }),
+                                            false
+                                        ).done(res => {
+                                            if (!res[0]) {
+                                                // TODO: Handle error
+                                                return;
+                                            }
+                                            var publicId = res[0];
+
+                                            if (checkout_flow == 'redirect') {
+                                                $.mage.redirect(res[1]);
+                                            } else {
+                                                fullScreenLoader.stopLoader();
+                                                var maskId = window.checkoutConfig.quoteData.entity_id;
+                                                if (window.checkoutConfig.isCustomerLoggedIn) {
+                                                    var confirmUrl = window.checkoutConfig.payment.credovafinancial.confirmUrl + '?refercust=' + maskId;
+                                                } else {
+                                                    var confirmUrl = window.checkoutConfig.payment.credovafinancial.confirmUrl + '?refergues=' + maskId;
+                                                }
+                                                var cancelUrl = window.checkoutConfig.payment.credovafinancial.cancelUrl;
+                                                window.CRDV.plugin.checkout(publicId, confirmUrl, cancelUrl);
+                                            }
+
+                                        }).fail(
+                                            function(response) {
+                                                fullScreenLoader.stopLoader();
+                                                alert(JSON.parse(response.responseText).message);
+                                            }
+                                        );
+                                    });
+                                }
+                            }
+                        }
+                    });
+                });
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+    <?php } ?>
+<?php
+}
+?>

@@ -1,0 +1,20 @@
+{
+    "quickpayorder_history": {
+        "column": {
+            "entity_id": true,
+            "quote_id": true,
+            "customer_id": true,
+            "created_at": true,
+            "order_id": true,
+            "order_status": true,
+            "attachment": true,
+            "payment_methods": true,
+            "shipping_method": true,
+            "all_payment_methods": true,
+            "all_shipping_methods": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

@@ -1,0 +1,22 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */
+/** @var \Magento\Backend\Block\Template $block */
+?>
+<?php
+/** @var \Amasty\StoreCredit\ViewModel\System\Config\Note $noteViewModel */
+$noteViewModel = $block->getData('note_view_model');
+?>
+
+<script type="text/x-magento-init">
+    {
+        "#amstorecredit_usage_action": {
+            "Amasty_StoreCredit/js/system/config/note-changer": {
+                "map" : <?= /** @noEscape  */ $noteViewModel->getMap() ?>
+            }
+        }
+    }
+</script>

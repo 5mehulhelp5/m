@@ -1,0 +1,38 @@
+//
+//  Transactions Demo styles
+//  _______________________________________________
+
+//
+//  Common
+//  ----------------------------------------------
+
+& when (@media-common = true) {
+    .transactions-demo {
+        & {
+            background: url('@{baseDir}Amasty_StoreCredit/images/transactions_demo.png') no-repeat center, linear-gradient(transparent, @color-white);
+            background-blend-mode: color;
+            background-size: contain;
+            margin-top: 3rem;
+            padding-bottom: 70rem;
+            position: relative;
+        }
+
+        .transactions-demo-link {
+            left: 50%;
+            position: absolute;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .transactions-demo-action {
+            & {
+                align-items: center;
+                display: flex;
+            }
+
+            > img {
+                padding: .5rem;
+            }
+        }
+    }
+}

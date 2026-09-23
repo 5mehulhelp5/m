@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © CyberSolutions LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <robots_extended>
+            <general>
+                <enabled>1</enabled>
+            </general>
+            <!--<noindex_follow>
+                <url_paths>
+                </url_paths>
+                <filter_params>
+product_list_order
+product_list_dir
+product_list_mode
+product_list_limit
+price
+cat
+manufacturer
+color
+size
+                </filter_params>
+            </noindex_follow>-->
+            <noindex_nofollow>
+                <url_paths>
+/sendfriend/
+/catalogsearch/
+                </url_paths>
+            </noindex_nofollow>
+        </robots_extended>
+    </default>
+</config>

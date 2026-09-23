@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+	<event name="sales_order_place_before">
+        <observer name="quick_pay_place_order_before" instance="Webkul\QuickPayForOrder\Observer\SalesOrderPlaceBefore" />
+    </event>
+
+    <!-- For prevent to update cart items qty -->
+    <event name="checkout_cart_update_items_before">
+        <observer name="quickpqy_checkout_cart_update_items_before" instance="Webkul\QuickPayForOrder\Observer\CartUpdateItemBefore" />
+    </event>
+
+    <!-- For prevent to add cart items -->
+    <event name="controller_action_predispatch_checkout_cart_add">
+        <observer name="quickpay_checkout_cart_product_add_before_observer" instance="Webkul\QuickPayForOrder\Observer\CheckoutCartProductAddBefore" />
+    </event>
+</config>

@@ -1,0 +1,35 @@
+{
+    "amasty_store_credit": {
+        "column": {
+            "store_credit_id": true,
+            "customer_id": true,
+            "store_credit": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_STORE_CREDIT_CUSTOMER_ID": true
+        }
+    },
+    "amasty_store_credit_history": {
+        "column": {
+            "history_id": true,
+            "customer_history_id": true,
+            "customer_id": true,
+            "is_deduct": true,
+            "difference": true,
+            "store_credit_balance": true,
+            "action": true,
+            "action_data": true,
+            "message": true,
+            "created_at": true,
+            "store_id": true,
+            "is_visible_for_customer": true,
+            "admin_name": true,
+            "order_id": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_STORE_CREDIT_HISTORY_ORDER_ID_SALES_ORDER_ENTITY_ID": true
+        }
+    }
+}

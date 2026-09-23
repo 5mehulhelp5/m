@@ -1,0 +1,21 @@
+<?php
+/** @var \CyberSolutionsLLC\CategoryTiles\Block\Widget\CategoryTiles $block */
+$tiles = $block->getTiles();
+if (empty($tiles)) {
+    return;
+}
+$heading = $block->escapeHtml($block->getHeading());
+?>
+<div class="category-tiles-widget six-tiles">
+    <h2 class="category-tiles-heading"><?= $heading ?></h2>
+    <div class="category-tiles-container">
+        <?php foreach ($tiles as $tile): ?>
+            <div class="tile-box">
+                <a href="<?= $block->escapeUrl($tile['url']) ?>" class="category-tile" title="<?= $block->escapeHtmlAttr($tile['text']) ?>">
+                    <img class="category-tile-image" src="<?= $block->escapeUrl($tile['image_url']) ?>"/>
+                    <span class="category-tile-label"><?= $block->escapeHtml($tile['text']) ?></span>
+                </a>
+            </div>
+        <?php endforeach; ?>
+    </div>
+</div>

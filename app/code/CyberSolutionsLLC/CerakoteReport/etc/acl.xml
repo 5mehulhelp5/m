@@ -1,0 +1,27 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © Cyber Solutions LLC. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Acl/etc/acl.xsd">
+    <acl>
+        <resources>
+            <resource id="Magento_Backend::admin">
+                <resource id="Magento_Reports::report" title="Reports" translate="title" sortOrder="60">
+                    <resource id="CyberSolutionsLLC_CerakoteReport::report_custom"
+                              title="Custom Reports"
+                              translate="title"
+                              sortOrder="90">
+                        <resource id="CyberSolutionsLLC_CerakoteReport::cerakote_production_report"
+                                  title="Cerakote Production Report"
+                                  translate="title"
+                                  sortOrder="10"/>
+                    </resource>
+                </resource>
+            </resource>
+        </resources>
+    </acl>
+</config>

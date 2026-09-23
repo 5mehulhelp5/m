@@ -1,0 +1,37 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */
+
+use Amasty\StoreCredit\ViewModel\TransactionsDemo;
+use Magento\Backend\Block\Template;
+use Magento\Framework\Escaper;
+
+/**
+ * @var Template $block
+ * @var Escaper $escaper
+ * @var TransactionsDemo $viewModel
+ */
+
+$viewModel = $block->getViewModel();
+?>
+<div class="message message-info">
+    <div class="amstorecredit-transactions-demo-message">
+        <?= $escaper->escapeHtml('Enable the \'amasty/module-store-credit-subscription-functionality\' module to activate the Transactions Log. '
+            . '(Note: This functionality is available as part of an active product subscription or support subscription. '
+            . 'To upgrade and obtain this functionality, please follow the') ?>
+        <a href="<?= $escaper->escapeUrl($viewModel->getSubscribeUrl() ?? '') ?>" target="_blank">
+            <?= $escaper->escapeHtml('link') ?></a><?= $escaper->escapeHtml('.)') ?>
+    </div>
+</div>
+<div class="transactions-demo">
+    <div class="transactions-demo-link">
+        <button class=" action- scalable primary transactions-demo-action"
+                onclick="window.open('<?= $escaper->escapeUrl($viewModel->getSubscribeUrl() ?? '') ?>', '_blank')">
+            <img src="<?= $escaper->escapeUrl($block->getViewFileUrl('Amasty_StoreCredit::images/locked.svg')) ?>">
+            <span><?= $escaper->escapeHtml(__('Unlock functionality')) ?></span>
+        </button>
+    </div>
+</div>

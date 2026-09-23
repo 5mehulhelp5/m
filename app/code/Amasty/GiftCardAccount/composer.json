@@ -1,0 +1,22 @@
+{
+    "name": "amasty/module-gift-card-account",
+    "description": "Gift Card Account by Amasty",
+    "require": {
+        "php": ">=7.4",
+        "amasty/base": ">=1.19.1",
+        "amasty/module-gift-card": ">=2.9.0"
+    },
+    "type": "magento2-module",
+    "version": "1.8.2",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\GiftCardAccount\\": ""
+        }
+    }
+}

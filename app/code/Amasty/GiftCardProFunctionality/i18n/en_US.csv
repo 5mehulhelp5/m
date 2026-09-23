@@ -1,0 +1,19 @@
+"Please mind that you can apply this code only once.","Please mind that you can apply this code only once."
+"Select ‘Multiple’ value for a Gift Card that can be used an indefinite number of times till the balance is over. ‘Single’ value should be used for a Gift Card that needs to be applied only once. In this case, the remaining balance will be reset.","Select ‘Multiple’ value for a Gift Card that can be used an indefinite number of times till the balance is over. ‘Single’ value should be used for a Gift Card that needs to be applied only once. In this case, the remaining balance will be reset."
+Usage,Usage
+"Apply Cart Price Rules to Gift Card","Apply Cart Price Rules to Gift Card"
+"
+                            Select ‘Multiple’ value for a Gift Card that can be used an indefinite number of times till the balance is over. ‘Single’ value should be used for a Gift Card that needs to be applied only once. In this case, the remaining balance will be reset.
+                        ","
+                            Select ‘Multiple’ value for a Gift Card that can be used an indefinite number of times till the balance is over. ‘Single’ value should be used for a Gift Card that needs to be applied only once. In this case, the remaining balance will be reset.
+                        "
+"
+                        {L} - letter, {D} - digit<br/>
+                        e.g. PROMO_{L}{L}{D}{D}{D} results in PROMO_DF627<br/>
+                        If you're using barcode generation for gift card images, recommended maximum code length is 15 symbols. Otherwise, the optimal length is 20 symbols.
+                    ","
+                        {L} - letter, {D} - digit<br/>
+                        e.g. PROMO_{L}{L}{D}{D}{D} results in PROMO_DF627<br/>
+                        If you're using barcode generation for gift card images, recommended maximum code length is 15 symbols. Otherwise, the optimal length is 20 symbols.
+                    "
+"Allowed image types: jpg, jpeg, png and gif. Recommended image size is 580x390px.<br/> If you're using the barcode element, keep in mind that longer gift codes require wider barcodes for readability. Test the barcode before emailing customers by creating a gift code account in Marketing > Gift Cards > Accounts with your email address. Click 'Save & Send Email' to send the email.","Allowed image types: jpg, jpeg, png and gif. Recommended image size is 580x390px.<br/> If you're using the barcode element, keep in mind that longer gift codes require wider barcodes for readability. Test the barcode before emailing customers by creating a gift code account in Marketing > Gift Cards > Accounts with your email address. Click 'Save & Send Email' to send the email."

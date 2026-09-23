@@ -1,0 +1,58 @@
+<!--@subject Regarding your Order # {{var order.increment_id}} on {{var store.getFrontendName()}} @-->
+<!--@vars
+{"store url=\"\"":"Store Url",
+"var logo_url":"Email Logo Image Url",
+"var register_url":"Signup URL",
+"var order":"Order"}
+@-->
+
+<!--@styles
+.register-link {
+    display: block;
+    color: white;
+    background: #C7A969;
+    border-color: #C7A969;
+    border-radius:5px;
+    padding: 13px 17px;
+    margin-top: 10px;
+    font-size: 15px;
+    text-decoration: none;
+}
+@-->
+
+{{template config_path="design/email/header_template"}}
+
+<table cellpadding="0" cellspacing="0" border="0">
+    <tr>
+        <td class="action-content">
+            <p>
+                Dear {{trans "%name," name=$order.getBillingAddress().getName()}}
+            </p>
+            <p>Important information regarding your recent order from {{var store.getFrontendName()}}</p>
+            <p>
+                Your order has been placed using the <b>guest checkout</b>. Therefore, you will not be able to easily track your order on our website.
+            </p>
+            <p>
+                We recommend you to create an account for the following benefits:
+            </p>
+            <ul>
+                <li>Proceed through checkout faster when making a purchase again</li>
+                <li>Check the status of orders</li>
+                <li>View past orders</li>
+                <li>Reorder with a click</li>
+                <li>Make changes to your account information</li>
+                <li>Store alternative addresses (for shipping to multiple family members and friends!)</li>
+            </ul>
+            <p align="center">
+                <a href="{{var register_link}}" class="register-link" style="display: block;color: white;background: #C7A969;border-color: #C7A969;border-radius:5px;padding: 13px 17px;margin-top: 10px;font-size: 15px;text-decoration: none;">
+                    Create Account Now!
+                </a>
+            </p>
+            <p style="text-align: center;font-style: italic;">
+                The registration form will be pre-filled with your information, you just need to choose your account password.
+            </p>
+        </td>
+    </tr>
+</table>
+
+{{template config_path="design/email/footer_template"}}

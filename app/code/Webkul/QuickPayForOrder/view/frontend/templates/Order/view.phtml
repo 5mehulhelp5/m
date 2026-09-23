@@ -1,0 +1,245 @@
+<?php
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+
+/** Webkul\QuickPayForOrder\Block\Order\View $block */
+
+$helper = $block->getHelper();
+$quoteId = $block->decode($block->getRequest()->getParam('id'));
+$payId = $block->decode($block->getRequest()->getParam('payid'));
+$quote = $block->getQuoteById($quoteId);
+$payOrder = $block->getQuickPayOrderId($payId);
+$attachment = $payOrder->getAttachment();
+if ($quote) {
+    $shippingAddress = $quote->getShippingAddress();
+    ?>
+    <style>
+        .no-padding { padding:0 !important;}
+    </style>
+    <?php $quoteCurrency = $quote->getCurrency()->getData('quote_currency_code'); ?>
+<div class="order-review-container">
+    <div class="buyer-info">
+        <h3><?= $block->escapeHtml(__('Hi %1', $shippingAddress->getFirstname())) ?>,</h3>
+        <span><?= $block->escapeHtml(__('Review Your Order Items')) ?></span>
+        <?php if ($attachment != '') { ?>
+        <span class="attachment">
+            <a target="_blank"
+                title="<?= $block->escapeHtml(__('Click Here To Download Attachment')) ?>"
+                href="<?= $block->escapeUrl($block->getUrl('*/*/download', ["id" => $block->encode($payId)])) ?>">
+                <?= $block->escapeHtml(__('Attachment')) ?>
+            </a>
+        </span>
+        <?php } ?>
+    </div>
+    <div class="order-details-items ordered">        
+        <div class="order-title">
+            <strong><?= $block->escapeHtml(__('Review Order Items')) ?></strong>
+        </div>
+        <div class="table-wrapper order-items">
+            <table class="data table table-order-items" id="my-orders-table" summary="Items Ordered">
+                <caption class="table-caption"><?= $block->escapeHtml(__('Order Items')) ?></caption>
+                <thead>
+                    <tr>
+                        <th class="col name"><?= $block->escapeHtml(__('Product Name')) ?></th>
+                        <th class="col sku"><?= $block->escapeHtml(__('SKU')) ?></th>
+                        <th class="col price"><?= $block->escapeHtml(__('Price')) ?></th>
+                        <th class="col qty"><?= $block->escapeHtml(__('Qty')) ?></th>
+                        <th class="col subtotal"><?= $block->escapeHtml(__('Subtotal')) ?></th>
+                    </tr>
+                </thead>
+                <tbody>
+                <?php
+                $items = $quote->getAllVisibleItems();
+                $serviceProductId = $helper->getServiceProductId();
+                $allOutOfStock = true;
+                foreach ($items as $item) {
+                    $product = $block->getProduct($item->getProductId());
+                    $price = 0;
+                    if ($item->getSku() == 'wk_service') {
+                        $price = $item->getBasePrice();
+                    } else {
+                        $price = $item->getBasePrice();
+                    }
+                    ?>
+                    <tr id="order-item-row-86" class="item-parent">
+                        <td class="col name" data-th="Product Name">
+                            <strong class="product name product-item-name break-string">
+                                <?= $block->escapeHtml($item->getName()) ?>
+                            </strong>
+                            <?php
+                            if ($product->isAvailable()) {
+                                $allOutOfStock = false;
+                                $stock = $block->escapeHtml(__("In Stock"));
+                            } else {
+                                $stock = $block->escapeHtml(__("Out of Stock"));
+                            }
+                            ?>
+                            <span class="<?= ($product->isAvailable()) ? '' : 'message error'?>">
+                                <?= $block->escapeHtml($stock) ?>
+                            </span>
+                            <?php if ($item->getProductId() == $serviceProductId
+                                && $item->getSku() == 'wk_service') { ?>
+                                <?php $optionData = $item->getOptionByCode('additional_options'); ?>
+                                <?php $additionalOptions = []; ?>
+                                <?php if ($optionData) { ?>
+                                    <?php $additionalOptions = json_decode($optionData->getValue(), true); ?>
+                                <?php }  ?>
+                                <?php if (!empty($additionalOptions)) { ?>
+                                    <table>
+                                        <tr>
+                                            <th class='no-padding'><?= $block->escapeHtml(__('Name')) ?></th>
+                                            <th class='no-padding'><?= $block->escapeHtml(__('Price')) ?></th>
+                                        </tr>
+                                    <?php foreach ($additionalOptions as $option) { ?>
+                                        <tr>
+                                            <td class='no-padding break-string'>
+                                                <?= $block->escapeHtml($option['label']) ?>
+                                            </td>
+                                            <td class='no-padding'>
+                                                <?= $block->escapeHtml($helper->getFormatedPrice(
+                                                    $option['value']
+                                                )) ?></td>
+                                        </tr>
+                                    <?php } ?>
+                                    </table>
+                                <?php } ?>
+                            <?php } ?>
+                        </td>
+                        <td class="col sku" data-th="SKU"><?= $block->escapeHtml($item->getSku()) ?></td>
+                        <td class="col price" data-th="Price">
+                            <span class="price-excluding-tax" data-label="Excl. Tax">
+                                <span class="cart-price">
+                                    <span class="price">
+                                        <?= $block->escapeHtml($helper->getFormatedPrice($price)); ?>
+                                    </span>
+                                </span>
+                            </span>
+                        </td>
+                        <td class="col qty" data-th="Quantity"><?= $block->escapeHtml($item->getQty()) ?></td>
+                        <td class="col subtotal" data-th="Subtotal">
+                            <span class="price-excluding-tax" data-label="Excl. Tax">
+                                <span class="cart-price">
+                                    <span class="price">
+                                        <?= $block->escapeHtml($helper->getFormatedPrice(
+                                            $item->getQty()*$price
+                                        )) ?></span>
+                                </span>
+                            </span>
+                        </td>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+                <tfoot>
+                    <tr class="shipping">
+                        <th colspan="4" class="mark" scope="row">
+                            <?= $block->escapeHtml(__('Shipping & Handling Charges')) ?>
+                        </th>
+                        <td class="amount"
+                            data-th="<?= $block->escapeHtml(__('Shipping &amp; Handling Charges')) ?>">
+                            <span class="price">
+                                <?= $block->escapeHtml($helper->getFormatedPrice(
+                                    $quote->getShippingAddress()->getBaseShippingAmount()
+                                )); ?></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="mark" scope="row"><?= $block->escapeHtml(__('Discount')) ?></th>
+                        <td class="amount" data-th="<?= $block->escapeHtml(__('Discount')) ?>">
+                            <?php $discount = $quote->getSubtotal() - $quote->getSubtotalWithDiscount(); ?>
+                            <span class="price">
+                                -<?= $block->escapeHtml($helper->getFormatedPrice(
+                                    $discount
+                                )); ?></span>
+                        </td>
+                    </tr>
+                    <tr>
+                        <th colspan="4" class="mark" scope="row">
+                            <?= $block->escapeHtml(__('Tax Amount')) ?>
+                        </th>
+                        <td class="amount" data-th="<?= $block->escapeHtml(__('Tax Amount')) ?>">
+                            <span class="price">
+                                <?= $block->escapeHtml($helper->getFormatedPrice(
+                                    $quote->getShippingAddress()->getData('base_tax_amount')
+                                )); ?></span>
+                        </td>
+                    </tr>
+                    <?php if ($quote->getShippingAddress()->getData('base_gw_price')) { ?>
+                    <tr>
+                        <th colspan="4" class="mark" scope="row">
+                            <?= $block->escapeHtml(__('Gift Wrapping for Order')) ?>
+                        </th>
+                        <td class="amount" data-th="<?= $block->escapeHtml(__('Gift Wrapping for Order')) ?>">
+                            <span class="price">
+                                <?= $block->escapeHtml($helper->getFormatedPrice(
+                                    $quote->getShippingAddress()->getData('base_gw_price')
+                                )); ?></span>
+                        </td>
+                    </tr>
+                    <?php } ?>
+                    <tr class="grand_total">
+                        <th colspan="4" class="mark" scope="row">
+                            <strong><?= $block->escapeHtml(__('Grand Total')) ?></strong>
+                        </th>
+                        <td class="amount" data-th="<?= $block->escapeHtml(__('Grand Total')) ?>">
+                            <strong><span class="price">
+                                <?= $block->escapeHtml($helper->getFormatedPrice(
+                                    $quote->getBaseGrandTotal()
+                                )); ?></span></strong>
+                        </td>
+                    </tr>
+                </tfoot>
+            </table>
+        </div>
+    </div>
+    <?php if ($payOrder->getOrderStatus() == 0) { ?>
+        <?php if (!$allOutOfStock) { ?>
+        <div class="order-action">
+            <form action="<?= $block->escapeUrl($block->getUrl('*/*/save')) ?>" method="post">
+                <input type="hidden" name="quote_id" value="<?= $block->escapeHtml($quoteId) ?>">
+                <input type="hidden" name="pay_id" value="<?= $block->escapeHtml($payId) ?>">
+                <?= /* @escapeNotVerified */ $block->getBlockHtml('formkey'); ?>
+                <textarea placeholder="<?= $block->escapeHtml(__('Additional Order Comments')) ?>"
+                    name="orderComment"></textarea>
+                <p style="font-weight: bold;">
+                    <?= $block->escapeHtml(
+                        __('Note: Existing cart products will be removed to complete this order')
+                    ) ?>
+                    <?= $block->escapeHtml(
+                        __('and please make sure to complete this order once you clicks on the Proceed to Pay button')
+                    ) ?>
+                </p>
+                <button style="float: right;" type="submit"
+                    title="<?= $block->escapeHtml(__('Complete Order')) ?>" class="action primary">
+                    <span><?= $block->escapeHtml(__('Proceed to Pay')) ?></span>
+                </button>
+            </form>
+        </div>
+        <?php } else { ?>
+            <div>
+                <span class="message error">
+                <?php if (count($items) == 0) { ?>
+                    <?= $block->escapeHtml(
+                        __('Unable to complete this order because quote products are removed')
+                    ) ?>
+                <?php } else { ?>
+                    <?= $block->escapeHtml(
+                        __('Unable to complete this order because all products are out of stock')
+                    ) ?>
+                <?php } ?>
+                </span>
+            </div>
+        <?php } ?>
+    <?php } else { ?>
+        <h3><?= $block->escapeHtml(__('This order is already completed.')) ?></h3>
+    <?php } ?>
+</div>
+<?php } ?>

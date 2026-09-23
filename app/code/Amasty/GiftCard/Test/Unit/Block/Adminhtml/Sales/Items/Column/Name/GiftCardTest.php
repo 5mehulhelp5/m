@@ -1,0 +1,239 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card for Magento 2
+ */
+
+namespace Amasty\GiftCard\Test\Unit\Block\Adminhtml\Sales\Items\Column\Name;
+
+use Amasty\GiftCard\Block\Adminhtml\Sales\Items\Column\Name\GiftCard;
+use Amasty\GiftCard\Model\Image\Image;
+use Amasty\GiftCard\Model\Image\Repository;
+use Amasty\GiftCard\Utils\FileUpload;
+use Magento\Directory\Model\Currency;
+use Magento\Directory\Model\PriceCurrency;
+use Magento\Framework\Escaper;
+use Magento\Framework\ObjectManagerInterface;
+use Magento\Framework\Stdlib\DateTime\TimezoneInterface;
+use Magento\Framework\TestFramework\Unit\Helper\ObjectManager;
+use Magento\Sales\Model\Order;
+use Magento\Sales\Model\Order\Item;
+use Magento\Store\Model\Store;
+use PHPUnit\Framework\MockObject\MockObject;
+
+/**
+ * @covers \Amasty\GiftCard\Block\Adminhtml\Sales\Items\Column\Name\GiftCard
+ */
+class GiftCardTest extends \PHPUnit\Framework\TestCase
+{
+    public const TEST_OPTIONS = [
+        'am_giftcard_amount' => '25',
+        'am_giftcard_type' => '1',
+        'am_giftcard_image' => '10',
+        'am_giftcard_sender_name' => 'Test Sender',
+        'am_giftcard_recipient_name' => 'Test Recipient',
+        'am_giftcard_recipient_email' => 'Test Recipient Email',
+        'am_giftcard_message' => 'Test Message',
+        'mobilenumber' => '123123123123',
+        'am_giftcard_lifetime' => '15',
+        'am_giftcard_date_delivery' => 'now',
+        'am_giftcard_date_delivery_timezone' => 'Test Timezone',
+        'am_giftcard_created_codes' => [
+            'TEST_1'
+        ]
+    ];
+
+    public const TEST_RESULT = [
+        [
+            'label' => 'Card Value',
+            'value' => '$25'
+        ],
+        [
+            'label' => 'Card Type',
+            'value' => 'Virtual'
+        ],
+        [
+            'label' => 'Gift Card Image',
+            'value' => '<img src="' . self::TEST_IMG_URL . '"  width="270px;" title="' . self::TEST_IMG_TITLE . '"/>',
+            'custom_view' => true
+        ],
+        [
+            'label' => 'Gift Card Sender',
+            'value' => 'Test Sender'
+        ],
+        [
+            'label' => 'Gift Card Recipient',
+            'value' => "Test Recipient &lt;Test Recipient Email&gt;"
+        ],
+        [
+            'label' => 'Gift Card Recipient Phone',
+            'value' => '123123123123'
+        ],
+        [
+            'label' => 'Gift Card Message',
+            'value' => 'Test Message'
+        ],
+        [
+            'label' => 'Gift Card Lifetime',
+            'value' => '15 days'
+        ],
+        [
+            'label' => 'Date of Certificate Delivery',
+            'value' => 'Test Date Delivery'
+        ],
+        [
+            'label' => 'Delivery Timezone',
+            'value' => 'Test Timezone'
+        ],
+        [
+            'label' => 'Gift Card Accounts',
+            'value' => 'TEST_1<br />N/A',
+            'custom_view' => true
+        ]
+    ];
+
+    public const TEST_IMG_PATH = 'testpath.jpg';
+    public const TEST_IMG_URL = 'test/image/url';
+    public const TEST_IMG_TITLE = 'Test Title';
+
+    /**
+     * @var GiftCard
+     */
+    private $block;
+
+    /**
+     * @var Item|MockObject
+     */
+    private $item;
+
+    /**
+     * @var Escaper|MockObject
+     */
+    private $escaper;
+
+    /**
+     * @var PriceCurrency|MockObject
+     */
+    private $priceCurrency;
+
+    /**
+     * @var Repository|MockObject
+     */
+    private $imageRepository;
+
+    /**
+     * @var FileUpload|MockObject
+     */
+    private $fileUpload;
+
+    protected function setUp(): void
+    {
+        $objectManager = new ObjectManager($this);
+        $objectManagerMock = $this->createMock(ObjectManagerInterface::class);
+        \Magento\Framework\App\ObjectManager::setInstance($objectManagerMock);
+
+        $this->escaper = $this->createPartialMock(Escaper::class, ['escapeHtml', 'escapeUrl']);
+        $this->priceCurrency = $this->createPartialMock(PriceCurrency::class, ['format']);
+        $this->imageRepository = $this->createPartialMock(Repository::class, ['getById']);
+        $this->fileUpload = $this->createPartialMock(FileUpload::class, ['getImageUrl']);
+        $localeDate = $this->getMockBuilder(TimezoneInterface::class)
+            ->disableOriginalConstructor()
+            ->onlyMethods(['formatDateTime', 'getConfigTimezone'])
+            ->getMockForAbstractClass();
+        $localeDate->method('formatDateTime')->willReturn('Test Date Delivery');
+        $localeDate->method('getConfigTimezone')->willReturn('America/Detroit');
+        $this->block = $objectManager->getObject(
+            GiftCard::class,
+            [
+                '_escaper' => $this->escaper,
+                'priceCurrency' => $this->priceCurrency,
+                'imageRepository' => $this->imageRepository,
+                'fileUpload' => $this->fileUpload,
+                '_localeDate' => $localeDate
+            ]
+        );
+        $this->item = $this->createPartialMock(Item::class, ['getProductOptionByCode']);
+        $this->item->setQtyOrdered(2);
+        $this->block->setItem($this->item);
+    }
+
+    public function testGetOrderOptions()
+    {
+        $valueMap = [
+            ['am_giftcard_amount', self::TEST_OPTIONS['am_giftcard_amount']],
+            ['am_giftcard_type', self::TEST_OPTIONS['am_giftcard_type']],
+            ['am_giftcard_image', self::TEST_OPTIONS['am_giftcard_image']],
+            ['am_giftcard_sender_name', self::TEST_OPTIONS['am_giftcard_sender_name']],
+            ['am_giftcard_recipient_name', self::TEST_OPTIONS['am_giftcard_recipient_name']],
+            ['am_giftcard_recipient_email', self::TEST_OPTIONS['am_giftcard_recipient_email']],
+            ['mobilenumber', self::TEST_OPTIONS['mobilenumber']],
+            ['am_giftcard_message', self::TEST_OPTIONS['am_giftcard_message']],
+            ['am_giftcard_lifetime', self::TEST_OPTIONS['am_giftcard_lifetime']],
+            ['am_giftcard_date_delivery', self::TEST_OPTIONS['am_giftcard_date_delivery']],
+            ['am_giftcard_date_delivery_timezone', self::TEST_OPTIONS['am_giftcard_date_delivery_timezone']],
+            ['am_giftcard_created_codes', self::TEST_OPTIONS['am_giftcard_created_codes']]
+        ];
+        $this->initPriceCurrency(self::TEST_OPTIONS['am_giftcard_amount']);
+        $this->initImage(self::TEST_OPTIONS['am_giftcard_image'], 4);
+
+        $this->item->method('getProductOptionByCode')
+            ->willReturnMap($valueMap);
+        $this->escaper->method('escapeHtml')
+            ->willReturnCallback(function ($arg) {
+                $arg = (string)$arg;
+
+                return stripos($arg, 'Image') === false
+                    ? $arg
+                    : self::TEST_IMG_TITLE;
+            });
+
+        $this->assertEquals(self::TEST_RESULT, $this->block->getOrderOptions());
+    }
+
+    /**
+     * @param string $value
+     *
+     * @throws \ReflectionException
+     */
+    protected function initPriceCurrency($value)
+    {
+        $currency = $this->createPartialMock(Currency::class, []);
+        $store = $this->createPartialMock(Store::class, ['getBaseCurrency']);
+        $store->expects($this->once())->method('getBaseCurrency')->willReturn($currency);
+        $order = $this->createPartialMock(Order::class, ['getStore']);
+        $order->expects($this->any())->method('getStore')->willReturn($store);
+        $this->block->setOrder($order);
+        $this->item->setOrder($order);
+
+        $this->priceCurrency->expects($this->once())->method('format')->with(
+            $value,
+            false,
+            \Magento\Framework\Pricing\PriceCurrencyInterface::DEFAULT_PRECISION,
+            $store,
+            $currency
+        )->willReturn('$' . $value);
+    }
+
+    /**
+     * @param int $imageId
+     * @param int $escaperIndex
+     *
+     * @throws \ReflectionException
+     */
+    protected function initImage($imageId, $escaperIndex)
+    {
+        $image = $this->createPartialMock(Image::class, []);
+        $image->setImageId($imageId);
+        $image->setImagePath(self::TEST_IMG_PATH);
+        $image->setIsUserUpload(true);
+        $this->imageRepository->expects($this->once())->method('getById')->with($imageId)->willReturn($image);
+
+        $this->fileUpload->expects($this->once())->method('getImageUrl')
+            ->with(self::TEST_IMG_PATH, true)
+            ->willReturn(self::TEST_IMG_URL);
+        $this->escaper->expects($this->once())->method('escapeUrl')
+            ->with(self::TEST_IMG_URL)
+            ->willReturn(self::TEST_IMG_URL);
+    }
+}

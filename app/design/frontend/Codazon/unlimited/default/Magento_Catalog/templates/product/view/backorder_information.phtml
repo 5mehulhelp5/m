@@ -1,0 +1,77 @@
+<?php
+/**
+ * @var \Crimson\ProductBackorderNotification\Block\BackorderInformation $block
+ */
+?>
+<?php $_product = $block->getProduct() ?>
+<?php $backorderMessage = $block->getBackorderMessage() ?>
+<?php if ($_product->getTypeId() === 'simple' && $block->getIsDisplayBackorderInformation()) :?>
+    <div class="backorder-info" title="<?= $block->escapeHtmlAttr(__('Backorder Information')) ?>">
+        <span><?= $block->escapeHtml($backorderMessage) ?></span>
+    </div>
+<?php endif; ?>
+
+<?php if ($_product->getTypeId() !== 'simple'): ?>
+    <div class="backorder-info" id="backorder-info" title="<?= $block->escapeHtmlAttr(__('Backorder Information')) ?>">
+        <span></span>
+    </div>
+
+    <script type="text/javascript">
+
+        require(['jquery','underscore'], function($,_){
+
+            var stockConfig = <?php echo $block->getStockJson(); ?>;
+            //console.log(stockConfig);
+
+            var replacement = $('#backorder-info span');
+
+            if ($('[data-role=swatch-options]').length > 0) {
+                $(".product-options-wrapper div").click(function () {
+
+                    var ids = [];
+
+                    ids = selpro();
+
+                    if (ids.length == 1 && ids[0] in stockConfig) {
+                        replacement.html('<strong>' + stockConfig[ids[0]] + '</strong>');
+                    } else {
+                        replacement.html('');
+                    }
+                });
+            } else {
+                $(".product-options-wrapper select[id^='attribute']").last().on('change', function() {
+                    setTimeout(function (){
+                        var simpleId = $("input[name=selected_configurable_option]").val();
+                        if (typeof stockConfig[simpleId] !== 'undefined') {
+                            replacement.html('<strong>' + stockConfig[simpleId] + '</strong>');
+                        }
+                    }, 500)
+                });
+            }
+
+            function selpro () {
+                var selected_options = {};
+                $('div.swatch-attribute').each(function(k,v){
+                    var attribute_id    = $(v).attr('attribute-id');
+                    var option_selected = $(v).attr('option-selected');
+                    //console.log(attribute_id, option_selected);
+                    if(!attribute_id || !option_selected){ return;}
+                    selected_options[attribute_id] = option_selected;
+                });
+
+                var product_id_index = $('[data-role=swatch-options]').data('mageSwatchRenderer').options.jsonConfig.index;
+                var found_ids = [];
+                $.each(product_id_index, function(product_id,attributes){
+                    var productIsSelected = function(attributes, selected_options){
+                        return _.isEqual(attributes, selected_options);
+                    }
+                    if(productIsSelected(attributes, selected_options)){
+                        found_ids.push(product_id);
+                    }
+                });
+
+                return found_ids;
+            }
+        });
+    </script>
+<?php endif; ?>

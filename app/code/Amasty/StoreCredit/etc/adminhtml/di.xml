@@ -1,0 +1,116 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference for="Amasty\StoreCredit\Model\History\Repository\GetHistoryAdminNameInterface"
+                type="Amasty\StoreCredit\Model\History\Repository\GetHistoryAdminName" />
+
+    <type name="Amasty\StoreCredit\Model\History\Repository\GetHistoryAdminName">
+        <arguments>
+            <argument name="adminActions" xsi:type="array">
+                <item name="admin_balance_change_plus"
+                      xsi:type="const">Amasty\StoreCredit\Model\History\MessageProcessor::ADMIN_BALANCE_CHANGE_PLUS</item>
+                <item name="admin_balance_change_minus"
+                      xsi:type="const">Amasty\StoreCredit\Model\History\MessageProcessor::ADMIN_BALANCE_CHANGE_MINUS</item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Sales\Model\Service\CreditmemoService">
+        <plugin name="AmastyRefundToStoreCredit" type="Amasty\StoreCredit\Plugin\RefundToStoreCredit" />
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="Amasty_StoreCredit::Sales_Order" type="Amasty\StoreCredit\Plugin\Sales\Model\OrderPlugin" />
+    </type>
+
+    <virtualType name="Amasty\StoreCredit\Config\TransactionLogCleaning" type="Amasty\Base\Block\Adminhtml\System\Config\Form\Field\Promo\PromoField">
+        <arguments>
+            <argument name="moduleName" xsi:type="string">Amasty_StoreCreditSubscriptionFunctionality</argument>
+            <argument name="promoConfig" xsi:type="array">
+                <item name="promoLink" xsi:type="string"><![CDATA[https://amasty.com/amcustomer/account/products/?utm_source=extension&utm_medium=backend&utm_campaign=subscribe_storecredit]]></item>
+                <item name="comment" xsi:type="string"><![CDATA[The functionality is available as part of an active product subscription or support subscription. To upgrade and obtain functionality please follow the <a href='https://amasty.com/amcustomer/account/products/?utm_source=extension&utm_medium=backend&utm_campaign=subscribe_storecredit' target='_blank'>link</a>. Then you can find the 'amasty/module-store-credit-subscription-functionality' package for installation in composer suggest.]]></item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <!-- import entities promo start -->
+    <virtualType name="AmastyStorecreditBalanceImport" type="Amasty\ImportCore\Import\Config\DemoEntityConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="entity_code" xsi:type="string">amasty_store_credit</item>
+                <item name="name" xsi:type="string">Amasty Store Credit Balance</item>
+                <item name="group" xsi:type="string">Amasty Store Credit</item>
+                <item name="is_hidden_in_lists" xsi:type="boolean">false</item>
+                <item name="additional_data" xsi:type="array">
+                    <item name="promoLink" xsi:type="string">https://amasty.com/docs/doku.php?id=magento_2:store-credit-and-refund&amp;utm_source=extension&amp;utm_medium=backend&amp;utm_campaign=suggest_plabels#additional_packages_provided_in_composer_suggestions</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AmastyStorecreditHistoryImport" type="Amasty\ImportCore\Import\Config\DemoEntityConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="entity_code" xsi:type="string">amasty_store_credit_history</item>
+                <item name="name" xsi:type="string">Amasty Store Credit History</item>
+                <item name="group" xsi:type="string">Amasty Store Credit</item>
+                <item name="is_hidden_in_lists" xsi:type="boolean">false</item>
+                <item name="additional_data" xsi:type="array">
+                    <item name="promoLink" xsi:type="string">https://amasty.com/docs/doku.php?id=magento_2:store-credit-and-refund&amp;utm_source=extension&amp;utm_medium=backend&amp;utm_campaign=suggest_plabels#additional_packages_provided_in_composer_suggestions</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\ImportCore\Import\Config\DemoEntitiesPool">
+        <arguments>
+            <argument name="demoEntities" xsi:type="array">
+                <item name="amasty_store_credit" xsi:type="object">AmastyStorecreditBalanceImport</item>
+                <item name="amasty_store_credit_history" xsi:type="object">AmastyStorecreditHistoryImport</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- import entities promo end -->
+
+    <!-- export entities promo start -->
+    <virtualType name="AmastyStorecreditBalanceExport" type="Amasty\ExportCore\Export\Config\DemoEntityConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="entity_code" xsi:type="string">amasty_store_credit</item>
+                <item name="name" xsi:type="string">Amasty Store Credit Balance</item>
+                <item name="group" xsi:type="string">Amasty Store Credit</item>
+                <item name="is_hidden_in_lists" xsi:type="boolean">false</item>
+                <item name="additional_data" xsi:type="array">
+                    <item name="promoLink" xsi:type="string">https://amasty.com/docs/doku.php?id=magento_2:store-credit-and-refund&amp;utm_source=extension&amp;utm_medium=backend&amp;utm_campaign=suggest_plabels#additional_packages_provided_in_composer_suggestions</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+    <virtualType name="AmastyStorecreditHistoryExport" type="Amasty\ExportCore\Export\Config\DemoEntityConfig">
+        <arguments>
+            <argument name="data" xsi:type="array">
+                <item name="entity_code" xsi:type="string">amasty_store_credit_history</item>
+                <item name="name" xsi:type="string">Amasty Store Credit History</item>
+                <item name="group" xsi:type="string">Amasty Store Credit</item>
+                <item name="is_hidden_in_lists" xsi:type="boolean">false</item>
+                <item name="additional_data" xsi:type="array">
+                    <item name="promoLink" xsi:type="string">https://amasty.com/docs/doku.php?id=magento_2:store-credit-and-refund&amp;utm_source=extension&amp;utm_medium=backend&amp;utm_campaign=suggest_plabels#additional_packages_provided_in_composer_suggestions</item>
+                </item>
+            </argument>
+        </arguments>
+    </virtualType>
+
+    <type name="Amasty\ExportCore\Export\Config\DemoEntitiesPool">
+        <arguments>
+            <argument name="demoEntities" xsi:type="array">
+                <item name="amasty_store_credit" xsi:type="object">AmastyStorecreditBalanceExport</item>
+                <item name="amasty_store_credit_history" xsi:type="object">AmastyStorecreditHistoryExport</item>
+            </argument>
+        </arguments>
+    </type>
+    <!-- export entities promo end -->
+</config>

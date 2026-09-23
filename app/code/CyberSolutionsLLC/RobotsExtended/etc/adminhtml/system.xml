@@ -1,0 +1,69 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * Copyright © CyberSolutions LLC. All rights reserved.
+ */
+-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="cybersolutionsllc" translate="label" sortOrder="0">
+            <label>CyberSolutions LLC</label>
+        </tab>
+        <section id="robots_extended" translate="label" type="text" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Robots Meta Tags Extended</label>
+            <tab>cybersolutionsllc</tab>
+            <resource>CyberSolutionsLLC_RobotsExtended::config</resource>
+
+            <group id="general" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>General Settings</label>
+
+                <field id="enabled" translate="label comment" type="select" sortOrder="1" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable Module</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                    <comment><![CDATA[Enable or disable the Robots Meta Tags Extended module.]]></comment>
+                </field>
+            </group>
+
+            <!--<group id="noindex_follow" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>NOINDEX,FOLLOW Configuration</label>
+                <comment>
+                    <![CDATA[Configure URLs that should be set to NOINDEX,FOLLOW. These pages won't be indexed but search engines will still follow links on them.]]></comment>
+
+                <field id="url_paths" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Paths</label>
+                    <comment><![CDATA[Enter one URL path per line in format /path/ (e.g., /partsearch/, /catalogsearch/). Trailing slash will be added automatically if missing.]]></comment>
+                    <backend_model>CyberSolutionsLLC\RobotsExtended\Model\Config\Backend\UrlPaths</backend_model>
+                    <depends>
+                        <field id="robots_extended/general/enabled">1</field>
+                    </depends>
+                </field>
+
+                <field id="filter_params" translate="label comment" type="textarea" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Filter/Sort URL Parameters</label>
+                    <comment>
+                        <![CDATA[Enter one parameter per line. URLs containing these query parameters will be set to NOINDEX,FOLLOW.<br/>Examples: product_list_order, price, cat, manufacturer, color, size]]></comment>
+                    <backend_model>CyberSolutionsLLC\RobotsExtended\Model\Config\Backend\FilterParams</backend_model>
+                    <depends>
+                        <field id="robots_extended/general/enabled">1</field>
+                    </depends>
+                </field>
+            </group>-->
+
+            <group id="noindex_nofollow" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>NOINDEX,NOFOLLOW Configuration</label>
+                <comment>
+                    <![CDATA[Configure URLs that should be set to NOINDEX,NOFOLLOW. These pages won't be indexed and search engines won't follow links on them.]]></comment>
+
+                <field id="url_paths" translate="label comment" type="textarea" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>URL Paths</label>
+                    <comment><![CDATA[Enter one URL path per line in format /path/ (e.g., /checkout/, /customer/). Trailing slash will be added automatically if missing.]]></comment>
+                    <backend_model>CyberSolutionsLLC\RobotsExtended\Model\Config\Backend\UrlPaths</backend_model>
+                    <depends>
+                        <field id="robots_extended/general/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

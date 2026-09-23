@@ -1,0 +1,40 @@
+& when (@media-common = true) {
+    .store-credit-add {
+        .store-credit-container {
+            .lib-css(max-width, 500px);
+        }
+
+        .store-credit-left {
+            .lib-css(margin-bottom, 10px);
+        }
+
+        .store-credit-left .field-tooltip {
+            display: inline-block;
+            position: relative;
+            right: unset;
+            top: unset;
+        }
+    }
+
+    .checkout-payment-method .payment-option._collapsible.store-credit-add .payment-option-content {
+        display: unset;
+    }
+}
+
+.media-width(@extremum, @break) when (@extremum = 'min') and (@break = @screen__m) {
+    .amstorecredit-pager {
+        .limiter {
+            float: right;
+        }
+    }
+}
+
+//
+//  Mobile
+//  ---------------------------------------------
+
+.media-width(@extremum, @break) when (@extremum = 'max') and (@break = @screen__s) {
+    .checkout-payment-method .payment-option._collapsible.store-credit-add .payment-option-content {
+        display: block;
+    }
+}

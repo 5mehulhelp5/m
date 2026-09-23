@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Import Core for Magento 2 (System)
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <amasty_import>
+            <multi_process>
+                <enabled>0</enabled>
+                <max_process_count>4</max_process_count>
+            </multi_process>
+            <advanced>
+                <debug>0</debug>
+                <no_memory_limit>0</no_memory_limit>
+            </advanced>
+        </amasty_import>
+    </default>
+</config>

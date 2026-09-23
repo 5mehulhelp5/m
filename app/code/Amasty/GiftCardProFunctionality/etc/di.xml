@@ -1,0 +1,58 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Pro Functionality for Magento 2 (System)
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Amasty\GiftCardAccount\Model\GiftCardAccount\CartAction\Response\Builder">
+        <arguments>
+            <argument name="builders" xsi:type="array">
+                <item name="add_to_cart" xsi:type="array">
+                    <item name="singleUsageMsg" xsi:type="object">Amasty\GiftCardProFunctionality\Model\GiftCardAccount\CartAction\Response\Builder\AddToCart\UsageMessage</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Magento\Quote\Model\Quote\Item\ToOrderItem">
+        <plugin name="amGcProAppendGiftCardDataToOrder" type="Amasty\GiftCardProFunctionality\Plugin\Model\Quote\Item\ToOrderItemPlugin"/>
+    </type>
+
+    <type name="Magento\SalesRule\Model\Validator\Pool">
+        <arguments>
+            <argument name="validators" xsi:type="array">
+                <item name="discount" xsi:type="array">
+                    <item name="am_giftcard_validator" xsi:type="object">Amasty\GiftCardProFunctionality\Model\GiftCard\Validator\Discount</item>
+                </item>
+            </argument>
+        </arguments>
+    </type>
+
+    <type name="Amasty\GiftCardProFunctionality\Model\Barcode\BarcodeGenerator">
+        <arguments>
+            <argument name="barcodeGeneratorAdapter" xsi:type="object">Amasty\GiftCardProFunctionality\Model\Barcode\Adapter\PicqerBarcodeAdapter</argument>
+        </arguments>
+    </type>
+
+    <virtualType name="AmBarcodeImageElementConfig" type="Amasty\GiftCard\Model\Image\ImageElementConfig">
+        <arguments>
+            <argument name="imageElementProcessor" xsi:type="object">Amasty\GiftCardProFunctionality\Model\Image\ImageElementProcessors\Barcode</argument>
+            <argument name="code" xsi:type="string">barcode</argument>
+            <argument name="defaultWidth" xsi:type="number">500</argument>
+            <argument name="defaultHeight" xsi:type="number">100</argument>
+            <argument name="defaultPosX" xsi:type="number">15</argument>
+            <argument name="defaultPosY" xsi:type="number">211</argument>
+            <argument name="sortOrder" xsi:type="number">41</argument>
+        </arguments>
+    </virtualType>
+    <type name="Amasty\GiftCard\Model\Image\ImageElementConfigProvider">
+        <arguments>
+            <argument name="elementsConfigs" xsi:type="array">
+                <item name="barcode" xsi:type="object">AmBarcodeImageElementConfig</item>
+            </argument>
+        </arguments>
+    </type>
+</config>

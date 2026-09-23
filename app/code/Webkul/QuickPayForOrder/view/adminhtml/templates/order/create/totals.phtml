@@ -1,0 +1,101 @@
+<?php
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<legend class="admin__legend"><span><?= $block->escapeHtml(__('Order Totals')) ?></span></legend>
+<br>
+
+<table class="admin__table-secondary data-table">
+    <tbody>
+        <?= /**@escapeNotVerified */ $block->renderTotals() ?>
+        <?= /** @escapeNotVerified */ $block->renderTotals('footer') ?>
+    </tbody>
+</table>
+
+<div class="order-totals-actions">
+    <div class="admin__field admin__field-option field-append-comments">
+        <input type="checkbox" id="notify_customer" name="order[comment][customer_note_notify]"
+               value="1"
+                <?php if ($block->getNoteNotify()): ?>
+                checked="checked"
+                <?php endif; ?>
+               class="admin__control-checkbox"/>
+        <label for="notify_customer" class="admin__field-label"><?= $block->escapeHtml(__('Append Comments')) ?></label>
+    </div>
+    <?php if ($block->canSendNewOrderConfirmationEmail()): ?>
+    <div class="admin__field admin__field-option field-email-order-confirmation">
+        <input type="checkbox" id="send_confirmation" name="order[send_confirmation]" value="1" checked="checked"
+               class="admin__control-checkbox"/>
+        <label for="send_confirmation" class="admin__field-label">
+            <?= $block->escapeHtml(__('Email Order Confirmation')) ?>
+        </label>
+    </div>
+    <input id="send_quick_pay" type="hidden" name="order[send_quick_pay_link]" value="" >
+
+    <div class="admin__field admin__field-option field-custom-attachment wk-hidden">
+        <input type="file" id="custom-attachment" name="order[custom_attachment]"
+               class="admin__control-file"/>
+        <label for="custom-attachment" class="admin__field-label">
+            <?= $block->escapeHtml(__('Allowed Extensions: jpg, jpeg, gif, png, pdf')) ?>
+        </label>
+    </div>
+
+    <?php endif; ?>
+    <div class="actions">
+        <?= $block->getButtonHtml(
+            __('Send Order Link'),
+            '',
+            'save primary quick_pay_order wk-hidden',
+            'quick_pay_order'
+        ) ?>
+        <?= $block->getButtonHtml(
+            __('Submit Order'),
+            'order.submit()',
+            'save primary quick_pay_order_main_submit'
+        ) ?>
+    </div>
+</div>
+
+<?php
+$scriptString = <<<script
+require(['prototype'], function() {
+
+//<![CDATA[
+var sendEmailCheckbox = $('send_confirmation');
+if (sendEmailCheckbox) {
+    Event.observe(sendEmailCheckbox, 'change', notifyCustomerUpdate);
+    notifyCustomerUpdate();
+}
+
+function notifyCustomerUpdate() {
+    var sendEmailCheckbox = $('send_confirmation');
+    var notifyCustomerCheckbox = $('notify_customer');
+    if (!sendEmailCheckbox || !notifyCustomerCheckbox)
+        return;
+    notifyCustomerCheckbox.disabled = !sendEmailCheckbox.checked;
+}
+//]]>
+
+window.notifyCustomerUpdate = notifyCustomerUpdate;
+window.sendEmailCheckbox = sendEmailCheckbox;
+});
+
+require(['jquery'], function($) {
+    if (window.quickpay == 1) {
+        $(document).find('#send-order-link').prop('checked', false).trigger('click');
+    } else {
+        $('.wk-hidden').hide();
+    }
+});
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+

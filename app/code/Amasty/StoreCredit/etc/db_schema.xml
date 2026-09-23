@@ -1,0 +1,118 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="amasty_store_credit"
+           resource="default"
+           engine="innodb"
+           comment="Amasty Store Credit Table">
+        <column name="store_credit_id"
+                xsi:type="int"
+                identity="true"
+                unsigned="true"
+                nullable="false"
+                comment="Store Credit ID" />
+        <column name="customer_id" xsi:type="int" unsigned="true" nullable="false" comment="Customer ID" />
+        <column name="store_credit"
+                xsi:type="decimal"
+                scale="4"
+                precision="12"
+                unsigned="true"
+                nullable="false"
+                comment="Store Credit Amount" />
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="store_credit_id" />
+        </constraint>
+
+        <constraint xsi:type="unique" referenceId="AMASTY_STORE_CREDIT_CUSTOMER_ID">
+            <column name="customer_id" />
+        </constraint>
+    </table>
+
+    <table name="amasty_store_credit_history"
+           resource="default"
+           engine="innodb"
+           comment="Amasty Store Credit History Table">
+        <!--
+            todo: create foreign key constraints for customer_id and store_id
+            (can't be created now because padding for reference columns differs between 2.3.x and 2.4.x)
+        -->
+
+        <column name="history_id"
+                xsi:type="int"
+                identity="true"
+                unsigned="true"
+                nullable="false"
+                comment="History ID" />
+        <column name="customer_history_id"
+                xsi:type="int"
+                unsigned="true"
+                nullable="false"
+                comment="Customer History ID" />
+        <column name="customer_id" xsi:type="int" unsigned="true" nullable="false" comment="Customer ID" />
+        <column name="is_deduct" xsi:type="boolean" default="false" nullable="false" comment="Is Deduct" />
+        <column name="difference"
+                xsi:type="decimal"
+                scale="4"
+                precision="12"
+                unsigned="true"
+                nullable="false"
+                comment="Difference" />
+        <column name="store_credit_balance"
+                xsi:type="decimal"
+                scale="4"
+                precision="12"
+                unsigned="true"
+                nullable="false"
+                comment="Store Credit Balance" />
+        <column name="action" xsi:type="smallint" unsigned="true" nullable="false" comment="Action" />
+        <column name="action_data"
+                xsi:type="varchar"
+                length="255"
+                default="[]"
+                nullable="true"
+                comment="Action Data" />
+        <column name="message" xsi:type="text" nullable="true" comment="Message" />
+        <column name="created_at"
+                xsi:type="timestamp"
+                nullable="false"
+                default="CURRENT_TIMESTAMP"
+                comment="Created At" />
+        <column name="store_id" xsi:type="smallint" unsigned="true" nullable="false" comment="Store ID" />
+        <column name="is_visible_for_customer"
+                xsi:type="boolean"
+                nullable="false"
+                default="true"
+                comment="Determines if comment is visible for customer" />
+        <column name="admin_name"
+                xsi:type="varchar"
+                length="40"
+                nullable="true"
+                comment="Admin Name" />
+        <column xsi:type="int"
+                name="order_id"
+                padding="10"
+                unsigned="true"
+                nullable="true"
+                identity="false"
+                comment="Order Id"/>
+
+        <constraint xsi:type="primary" referenceId="PRIMARY">
+            <column name="history_id" />
+        </constraint>
+        <constraint xsi:type="foreign"
+                    referenceId="AMASTY_STORE_CREDIT_HISTORY_ORDER_ID_SALES_ORDER_ENTITY_ID"
+                    table="amasty_store_credit_history"
+                    column="order_id"
+                    referenceTable="sales_order"
+                    referenceColumn="entity_id"
+                    onDelete="SET NULL"/>
+    </table>
+</schema>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Pro Functionality for Magento 2 (System)
+ */-->
+
+<form xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Ui:etc/ui_configuration.xsd">
+    <fieldset name="general">
+        <fieldset name="image_container">
+            <argument name="data" xsi:type="array">
+                <item name="config" xsi:type="array">
+                    <item name="notice" xsi:type="string" translate="true"><![CDATA[Allowed image types: jpg, jpeg, png and gif. Recommended image size is 580x390px.<br/> If you're using the barcode element, keep in mind that longer gift codes require wider barcodes for readability. Test the barcode before emailing customers by creating a gift code account in Marketing > Gift Cards > Accounts with your email address. Click 'Save & Send Email' to send the email.]]></item>
+                </item>
+            </argument>
+        </fieldset>
+    </fieldset>
+</form>

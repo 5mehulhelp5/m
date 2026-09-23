@@ -1,0 +1,12 @@
+<?php
+/**
+ * @var \Crimson\ProductBackorderNotification\Block\BackorderInformation $block
+ */
+?>
+<?php $_product = $block->getProduct() ?>
+<?php $backorderMessage = $block->getBackorderMessage() ?>
+<?php if ($block->getIsDisplayBackorderInformation()) :?>
+    <div class="backorder-info" title="<?= $block->escapeHtmlAttr(__('Backorder Information')) ?>">
+        <span><?= $block->escapeHtml($backorderMessage) ?></span>
+    </div>
+<?php endif; ?>

@@ -1,0 +1,84 @@
+<!--
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+-->
+<!--@subject {{trans "Quick Pay For Order"}}  @-->
+
+{{template config_path="design/email/header_template"}}
+
+<body style="background:#F6F6F6; font-family:Verdana, Arial, Helvetica, sans-serif; font-size:12px; margin:0; padding:0;">
+    <table cellspacing="0" cellpadding="0" border="0" width="100%">
+        <tr class="email-information">
+            <td>
+                <p>{{trans "Hi,"}}</p>
+                <p>{{trans "I would like to inform you that your order is ready to complete"}}</p>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <table class="email-items">
+                    <thead>
+                        <tr>
+                            <th class="item-info">{{trans "Item"}}</th>
+                            <th class="item-info">{{trans "Sku"}}</th>
+                            <th class="item-qty">{{trans "Qty"}}</th>
+                            <th class="item-price">{{trans "Subtotal"}}</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {{var items|raw}}
+                    </tbody>
+                    <tfoot class="order-totals">
+                        <tr class="subtotal">
+                            <td colspan="3">{{trans "Shipping & Handling Charges"}} </td>
+                            <td>{{var shippingCharge}}</td>
+                        </tr>
+                        <tr class="subtotal">
+                            <td colspan="3">{{trans "Discount"}} </td>
+                            <td>{{var discountAmount}}</td>
+                        </tr>
+                        <tr class="subtotal">
+                            <td colspan="3">{{trans "Tax Amount"}} </td>
+                            <td>{{var taxAmount}}</td>
+                        </tr>
+                        {{depend giftWrapperAmount}}
+                        <tr class="subtotal">
+                            <td colspan="3">{{trans "Gift Wrapping for Order"}} </td>
+                            <td>{{var giftWrapperAmount}}</td>
+                        </tr>
+                        {{/depend}}
+                        <tr class="subtotal">
+                            <td colspan="3">{{trans "Grand Total"}} </td>
+                            <td>{{var grandTotal}}</td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <h3>
+                    <a style="float: right;padding: 10px;" href="{{var quickPayLink}}">
+                        {{trans "Click Here To Complete Your Order"}}
+                    </a>
+                </h3>
+                {{depend downloadLink}}
+                <p>
+                    <a style="float: right;padding: 10px;" href="{{var downloadLink}}">
+                        {{trans "Click Here To Download Attachment"}}
+                    </a>
+                </p>
+                {{/depend}}
+            </td>
+        </tr>
+    </table>
+</body>
+
+{{template config_path="design/email/footer_template"}}

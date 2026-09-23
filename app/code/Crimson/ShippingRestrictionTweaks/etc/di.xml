@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <preference
+        for="Mageplaza\ShippingRestriction\Plugin\Model\Quote\Address"
+        type="Crimson\ShippingRestrictionTweaks\Plugin\ShippingRestrictionAddress"
+    />
+
+    <type name="Magento\Quote\Api\ShipmentEstimationInterface">
+        <plugin name="check_rules_after_shipment_estimation" type="Crimson\ShippingRestrictionTweaks\Plugin\EstimateShippingMethodsPlugin"/>
+    </type>
+    <type name="Magento\Quote\Api\ShippingMethodManagementInterface">
+        <plugin name="check_rules_after_estimate_by_address" type="Crimson\ShippingRestrictionTweaks\Plugin\EstimateShippingMethodsPlugin"/>
+    </type>
+    <type name="Mageplaza\ShippingRestriction\Helper\Data">
+        <plugin name="filter_non_scalar_shipping_method_labels" type="Crimson\ShippingRestrictionTweaks\Plugin\ShippingMethodsHelperPlugin"/>
+    </type>
+</config>

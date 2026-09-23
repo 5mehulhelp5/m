@@ -1,0 +1,38 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+
+/**
+ * @var \Magento\Framework\Escaper $escaper
+ */
+?>
+<?php $_item = $block->getItem() ?>
+<?php $_order = $block->getItem()->getOrder(); ?>
+<?php $_store = $_order->getStore(); ?>
+
+<?php
+   $productId = $_item->getProductId();
+   $objectManagerHere = \Magento\Framework\App\ObjectManager::getInstance();
+   $product = $objectManagerHere->get('Magento\Catalog\Model\Product')->load($productId);
+   $productImage = $this->helper('Magento\Catalog\Helper\Image')->init($product, 'category_page_list', array('height' => '65' , 'width'=> '65'))->getUrl();
+?>
+<tr>
+    <td class="item-info<?= ($block->getItemOptions() ? ' has-extra' : '') ?>">
+        <img height="100" width="100" src="<?= $productImage ?>" alt="<?= __('Product Image');?>">
+    </td>
+    <td class="item-info<?= ($block->getItemOptions() ? ' has-extra' : '') ?>">
+        <p class="product-name"><?= $escaper->escapeHtml($_item->getName()) ?></p>
+        <p class="sku"><?= $escaper->escapeHtml(__('SKU')) ?>: <?= $escaper->escapeHtml($block->getSku($_item)) ?></p>
+        <?php $addInfoBlock = $block->getProductAdditionalInformationBlock(); ?>
+        <?php if ($addInfoBlock) : ?>
+            <?= $addInfoBlock->setItem($_item->getOrderItem())->toHtml() ?>
+        <?php endif; ?>
+        <?= $escaper->escapeHtml($_item->getDescription()) ?>
+    </td>
+    <td class="item-qty"><?= (float) $_item->getQty() ?></td>
+    <td class="item-price">
+        <?= /* @noEscape */ $block->getItemPrice($_item->getOrderItem()) ?>
+    </td>
+</tr>

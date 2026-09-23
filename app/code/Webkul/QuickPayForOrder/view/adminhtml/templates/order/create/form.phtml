@@ -1,0 +1,118 @@
+<?php
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+
+ /** @var \Magento\Sales\Block\Adminhtml\Order\Create\Form $block */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+?>
+<?php
+$blockObj= $block->getLayout()->createBlock(
+    \Webkul\QuickPayForOrder\Block\Adminhtml\Order\Create\Items\ItemsGrid::class
+);
+$helper = $blockObj->getHelper();
+$serviceProductId = $helper->getServiceProductId();
+?>
+<form id="edit_form"
+    data-order-config='<?= $block->escapeHtml($block->getOrderDataJson()) ?>'
+    data-load-base-url="<?= /**@escapeNotVerified */ $block->getLoadBlockUrl() ?>"
+    action="<?= /**@escapeNotVerified */ $block->getSaveUrl() ?>" method="post" enctype="multipart/form-data">
+    <?= $block->getBlockHtml('formkey') ?>
+    <div id="order-message">
+        <?= $block->getChildHtml('message') ?>
+    </div>
+    <div id="order-customer-selector"
+        class="fieldset-wrapper order-customer-selector"
+        style="display:<?= /**@escapeNotVerified */ $block->getCustomerSelectorDisplay() ?>">
+        <?= $block->getChildHtml('customer.grid.container') ?>
+    </div>
+    <div id="order-store-selector"
+        class="fieldset-wrapper"
+        style="display:<?= /**@escapeNotVerified */ $block->getStoreSelectorDisplay() ?>">
+        <?= $block->getChildHtml('store') ?>
+    </div>
+    <div id="order-data" style="display:<?= /**@escapeNotVerified */ $block->getDataSelectorDisplay() ?>">
+        <?= $block->getChildHtml('data') ?>
+    </div>
+</form>
+
+<div id="service-model" class="no-display">
+    <div id="service-message" class="message hidden"></div>
+    <form method="post" action="" id="model-form" data-mage-init='{"validation":{}}'>
+        <div class="actions" style="margin: 2px 0; text-align:right">
+            <button title="<?= $block->escapeHtml(__('Click To Add')) ?>"
+                class="primary" id="add-service-row" type="button">
+                    <?= $block->escapeHtml(__('Add')) ?>
+            </button>
+        </div>
+       
+        <fieldset class="admin__fieldset">
+            <table class="table data-grid" id="model-form-table">
+                <thead>
+                    <tr class="">
+                        <th class="data-grid-th" style="width:75%">
+                            <span><?= $block->escapeHtml(__('Name')) ?></span>
+                        </th>
+                        <th class="data-grid-th" style="width:15%">
+                            <span><?= $block->escapeHtml(__('Price')) ?></span>
+                        </th>
+                        <th class="data-grid-th" style="width:10%">
+                            <span><?= $block->escapeHtml(__('Action')) ?> </span>
+                        </th>
+                    </tr>
+                </thead>
+                <tbody id="service-tbody-row">
+                    
+                </tbody>
+            </table>
+        </fieldset>
+    </form>
+</div>
+
+<script id="service-row-template" type="text/x-magento-template">
+<tr class="service-row-tr">
+    <td>
+        <div class="admin__field-control">
+            <input name="product[<%- data.index %>][name]"
+                type="text"
+                class="admin__control-text service_form_field wkcheckjs required-entry">
+        </div>
+    </td>
+    <td>
+        <div class="admin__field-control">
+            <input name="product[<%- data.index %>][price]"
+                type="text"
+                class="admin__control-text service_form_field required-entry validate-zero-or-greater validate-number">
+        </div>
+    </td>
+    <td>
+        <div class="admin__field-control">
+            <button title="<?= $block->escapeHtml(__('Click To Remove')) ?>"
+                class="default remove-service-row"
+                type="button">
+                <?= $block->escapeHtml(__('Remove')) ?>
+            </button>
+        </div>
+    </td>
+</tr>
+</script>
+<?php
+$scriptString = <<<script
+    window.addOptionAjaxUrl = "{$block->getUrl('quickpayfororder/product/addoptions/')}";
+    window.serviceId = "{$serviceProductId}";
+script;
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+<script type="text/x-magento-init">
+    {
+        "body": {
+            "quickPayScript": {}
+        }
+    }
+</script>

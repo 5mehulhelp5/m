@@ -1,0 +1,92 @@
+<?php
+/**
+ * Copyright © Magento, Inc. All rights reserved.
+ * See COPYING.txt for license details.
+ */
+/**
+ * @var Magento\Sales\Block\Order\Email\Shipment\Items $block
+ * @var Magento\Framework\Escaper $escaper
+ */
+?>
+<?php
+/** @var \Magento\Sales\Model\Order\Shipment $_shipment */
+$_shipment = $block->getShipment();
+
+/** @var \Magento\Sales\Model\Order $_order */
+$_order = $_shipment ? $_shipment->getOrder() : $block->getOrder();
+
+if ($_order) {
+    $shipments = $_order->getShipmentsCollection();
+    $_store = $_order->getStore();
+} else {
+    $shipments = null;
+    $_store = null;
+}
+?>
+<?php if ($shipments && $_order) : ?>
+    <table class="email-items">
+        <thead>
+            <tr>
+                <th class="item-info" colspan="2">
+                    <?= $block->escapeHtml(__('Items')) ?>
+                </th>
+                <th class="item-qty">
+                    <?= $block->escapeHtml(__('Qty')) ?>
+                </th>
+            </tr>
+        </thead>
+        <?php foreach ($shipments as $_currentShipment) : ?>
+            <?php foreach ($_currentShipment->getAllItems() as $_item) : ?>
+                <?php if (!$_item->getOrderItem()->getParentItem()) : ?>
+                    <tbody>
+                        <?= $block->getItemHtml($_item) ?>
+                    </tbody>
+                <?php endif; ?>
+            <?php endforeach; ?>
+        <?php endforeach; ?>
+    </table>
+<?php endif; ?>
+
+
+<?php if ($_shipment && $_order) : ?>
+    <?php $trackCollection = $_order->getTracksCollection() ?>
+    <?php if ($trackCollection) : ?>
+        <br />
+        <table class="shipment-track">
+            <thead>
+            <tr>
+                <th><?= $escaper->escapeHtml(__('Shipped By')) ?></th>
+                <th><?= $escaper->escapeHtml(__('Tracking Number')) ?></th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            /** @var \Magento\Sales\Model\Order\Shipment\Track $_item */
+            foreach ($trackCollection as $_item) : ?>
+                <?php
+                $trackurl = '';
+                if($_item->getCarrierCode() === 'fedex'){
+                    $trackurl = 'https://www.fedex.com/apps/fedextrack/?action=track&trackingnumber='.$_item->getNumber();
+                }elseif ($_item->getCarrierCode() === 'usps') {
+                    $trackurl = 'https://tools.usps.com/go/TrackConfirmAction_input?qtc_tLabels1='.$_item->getNumber();
+                }elseif ($_item->getCarrierCode() === 'ups') {
+                    $trackurl = 'https://wwwapps.ups.com/WebTracking/returnToDetails?tracknum='.$_item->getNumber();
+                }
+                ?>
+                <tr>
+                    <td><?= $escaper->escapeHtml($_item->getTitle()) ?></td>
+                    <td>
+                        <?php if ($trackurl) : ?>
+                        <a href="<?= $escaper->escapeUrl($trackurl) ?>" target="_blank">
+                            <?= $escaper->escapeHtml($_item->getNumber()) ?>
+                        </a>
+                        <?php else: ?>
+                        <?= $escaper->escapeHtml($_item->getNumber()); ?>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach ?>
+            </tbody>
+        </table>
+    <?php endif; ?>
+<?php endif; ?>

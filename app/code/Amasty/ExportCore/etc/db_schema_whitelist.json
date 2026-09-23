@@ -1,0 +1,18 @@
+{
+    "amasty_export_process": {
+        "column": {
+            "id": true,
+            "entity_code": true,
+            "profile_config": true,
+            "identity": true,
+            "pid": true,
+            "status": true,
+            "finished": true,
+            "export_result": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_EXPORT_PROCESS_IDENTITY": true
+        }
+    }
+}

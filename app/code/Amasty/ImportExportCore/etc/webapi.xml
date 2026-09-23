@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Import-Export Core for Magento 2 (System)
+ */-->
+<routes xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Webapi:etc/webapi.xsd">
+    <route url="/V1/am_import_export/get_profile_runners/" method="GET">
+        <service class="Amasty\ImportExportCore\Api\Profile\ProfileManagerInterface" method="getProfileRunnersList"/>
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+    </route>
+
+    <route url="/V1/am_import_export/check_profile_status/" method="POST">
+        <service class="Amasty\ImportExportCore\Api\Profile\ProfileManagerInterface" method="checkProfileRunStatus"/>
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+    </route>
+
+    <route url="/V1/am_import_export/run_profile/" method="POST">
+        <service class="Amasty\ImportExportCore\Api\Profile\ProfileManagerInterface" method="run"/>
+        <resources>
+            <resource ref="Magento_Backend::admin" />
+        </resources>
+    </route>
+</routes>

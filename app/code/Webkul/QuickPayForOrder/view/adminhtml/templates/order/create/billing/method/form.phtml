@@ -1,0 +1,159 @@
+<?php
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+/** @var \Magento\Framework\View\Helper\SecureHtmlRenderer $secureRenderer */
+/** @var \Magento\Framework\Escaper $escaper */
+?>
+<?php if ($block->hasMethods()): ?>
+<div class="admin__field admin__field-option field-send-order-link"
+    data-mage-init='{"Webkul_QuickPayForOrder/order/create/quickPayScript": {}}'>
+    <input type="checkbox" id="send-order-link"
+        name="order[send_order_quick_pay_link]"
+        value="1"
+        class="admin__control-checkbox hidden"/>
+        <label for="send-order-link" class="admin__field-label">
+            <?= $block->escapeHtml(__('Send Order Link')) ?>
+        </label>
+    <div class="wk-hidden">
+        <input type="checkbox" id="allow-all-payment"
+            name="order[allow_all_payment]"
+            value="1"
+            class="admin__control-checkbox hidden"/>
+        <label for="allow-all-payment" class="admin__field-label">
+            <?= $block->escapeHtml(__('Allow all payment methods at checkout')) ?>
+        </label>
+    </div>
+    <div class="wk-hidden" id="allow-all-shipping-block">
+        <input type="checkbox" id="allow-all-shipping"
+            name="order[allow_all_shipping]"
+            value="1"
+            class="admin__control-checkbox hidden"/>
+        <label for="allow-all-shipping" class="admin__field-label">
+            <?= $block->escapeHtml(__('Allow all shipping methods at checkout')) ?>
+        </label>
+    </div>
+</div>
+<hr>
+<div id="order-billing_method_form">
+    <dl class="admin__payment-methods-radio_button">
+    <?php
+        $_methods = $block->getMethods();
+        $_methodsCount = count($_methods);
+        $_counter = 0;
+    ?>
+    <?php foreach ($_methods as $_method): ?>
+        <?php $_code = $_method->getCode(); ?>
+        <?php $_counter++; ?>
+        <dt class="admin__field-option">
+        <?php if ($_methodsCount > 1): ?>
+            <input id="p_method_<?= $block->escapeHtml($_code); ?>"
+                value="<?= $block->escapeHtml($_code); ?>"
+                type="radio" name="payment[method]"
+                title="<?= $block->escapeHtml($_method->getTitle()); ?>"
+                    <?php if ($block->getSelectedMethodCode() == $_code): ?>
+                    checked="checked"
+                    <?php endif; ?>
+                    <?php $className = ($_counter == $_methodsCount) ? ' validate-one-required-by-name' : ''; ?>
+                class="admin__control-radio<?= $block->escapeHtml($className); ?>"/>
+        <?php else:?>
+            <span class="no-display">
+                <input id="p_method_<?= $block->escapeHtml($_code); ?>"
+                    value="<?= $block->escapeHtml($_code); ?>"
+                    type="radio"
+                    name="payment[method]" class="admin__control-radio"
+                    checked="checked"
+                    />
+            </span>
+        <?php endif;?>
+            <label class="admin__field-label"
+                for="p_method_<?= $block->escapeHtml($_code); ?>"><?= $block->escapeHtml($_method->getTitle()) ?>
+            </label>
+            <?php if ($_methodsCount > 1): ?>
+                <?= /* @noEscape */ $secureRenderer->renderEventListenerAsTag(
+                    'onclick',
+                    "payment.switchMethod('" . $escaper->escapeJs($_code) . "')",
+                    'input#p_method_' . $escaper->escapeJs($_code)
+                ) ?>
+            <?php endif; ?>
+        </dt>
+        <dd class="admin__payment-method-wrapper">
+            <?= /* @noEscape */ $block->getChildHtml('payment.method.' . $_code) ?>
+        </dd>
+    <?php endforeach; ?>
+    </dl>
+</div>
+<!-- payment methods with checkbox  -->
+<dl id="payement-list-with-checkbox" class="payment-methods-checkbox no-display wk-hidden">
+    <?php
+        $_methods = $block->getMethods();
+        $_methodsCount = count($_methods);
+        $_counter = 0;
+    ?>
+    <?php foreach ($_methods as $_method): ?>
+        <?php $_code = $_method->getCode(); ?>
+        <?php $_counter++; ?>
+        <dt class="admin__field-option">
+        <?php if ($_methodsCount > 1): ?>
+            <input id="p_method_checkbox_<?= $block->escapeHtml($_code); ?>"
+                value="<?= $block->escapeHtml($_code); ?>"
+                type="checkbox" name="quickpay_methods[<?= $block->escapeHtml($_code); ?>]"
+                title="<?= $block->escapeHtml($_method->getTitle()); ?>"
+                    <?php if ($block->getSelectedMethodCode() == $_code): ?>
+                    checked="checked"
+                    <?php endif; ?>
+                class="admin__control-checkbox wk-payment-methods-checkbox"/>
+        <?php else:?>
+            <span class="no-display">
+                <input id="p_method_checkbox_<?= $block->escapeHtml($_code); ?>"
+                    value="<?= $block->escapeHtml($_code); ?>"
+                    type="checkbox"
+                    name="quickpay_methods[<?= $block->escapeHtml($_code); ?>]"
+                    class="admin__control-checkbox wk-payment-methods-checkbox"
+                    checked="checked"/>
+            </span>
+        <?php endif;?>
+            <label class="admin__field-label"
+                for="p_method_checkbox_<?= $block->escapeHtml($_code); ?>">
+                    <?= $block->escapeHtml($_method->getTitle()) ?>
+            </label>
+        </dt>
+    <?php endforeach; ?>
+    </dl>
+<?php
+$scriptString = "
+        require([
+            'mage/apply/main',
+            'Magento_Sales/order/create/form'
+        ], function(mage) {
+            mage.apply();
+";
+?>
+            <?php if ($_methodsCount !== 1): ?>
+<?php
+$scriptString .= "
+                order.setPaymentMethod('{$block->escapeHtml($block->getSelectedMethodCode())}');
+";
+?>
+            <?php else: ?>
+<?php
+$scriptString .= "
+                payment.switchMethod('{$block->escapeHtml($block->getSelectedMethodCode())}');
+";
+?>
+            <?php endif; ?>
+<?php
+$scriptString .= "
+        });
+";
+?>
+<?= /* @noEscape */ $secureRenderer->renderTag('script', [], $scriptString, false); ?>
+<?php else: ?>
+    <div class="admin__message-empty"><?= $block->escapeHtml(__('No Payment Methods')); ?></div>
+<?php endif; ?>

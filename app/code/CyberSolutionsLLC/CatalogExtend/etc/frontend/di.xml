@@ -1,0 +1,23 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Framework\View\Page\Config">
+        <plugin name="custom_robots_for_search_page"
+                type="CyberSolutionsLLC\CatalogExtend\Plugin\CustomRobots"/>
+        <plugin name="child_sku_robots"
+                type="CyberSolutionsLLC\CatalogExtend\Plugin\Product\ChildSkuRobotsPlugin"
+                sortOrder="20"/>
+    </type>
+    <type name="Magento\Framework\Controller\ResultInterface">
+        <plugin name="custom_header_for_search_page"
+                type="CyberSolutionsLLC\CatalogExtend\Plugin\CustomHeader"/>
+    </type>
+    <type name="Magento\Catalog\Controller\Category\View">
+        <plugin name="category_page_zero_result_404_when_apply_filters"
+                type="CyberSolutionsLLC\CatalogExtend\Plugin\Category\View404Plugin"/>
+    </type>
+    <type name="Magento\Catalog\Helper\Product">
+        <plugin name="allow_child_sku_direct_view"
+                type="CyberSolutionsLLC\CatalogExtend\Plugin\Product\AllowChildSkuDirectViewPlugin"/>
+    </type>
+</config>

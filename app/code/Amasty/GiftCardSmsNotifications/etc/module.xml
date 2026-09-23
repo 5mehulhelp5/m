@@ -1,0 +1,14 @@
+<?xml version="1.0"?>
+<!--
+/**
+* @author Amasty Team
+* @copyright Copyright (c) 2022 Amasty (https://www.amasty.com)
+* @package Gift Card Sms Notifications for Magento 2 (System)
+*/-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Module/etc/module.xsd">
+    <module name="Amasty_GiftCardSmsNotifications" setup_version="1.0.0">
+        <sequence>
+            <module name="Amasty_Base" />
+        </sequence>
+    </module>
+</config>

@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<schema xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Setup/Declaration/Schema/etc/schema.xsd">
+    <table name="newsletter_template">
+        <column xsi:type="mediumtext" name="template_text" nullable="true" comment="Template Text"/>
+    </table>
+    <table name="newsletter_queue">
+        <column xsi:type="mediumtext" name="newsletter_text" nullable="true" comment="Newsletter Text"/>
+    </table>
+</schema>

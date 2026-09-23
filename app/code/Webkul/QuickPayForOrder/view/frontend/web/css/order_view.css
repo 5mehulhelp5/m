@@ -1,0 +1,37 @@
+/**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */
+.buyer-info span {
+    font-size: 16px;
+}
+.attachment {
+    float:right;
+    cursor: pointer;
+}
+.attachment a:after {
+    content: '\e626';
+    font-family: 'luma-icons';
+    color: #6d6d6d;
+}
+.order-details-items.ordered {
+    margin-top: 10px;
+    box-shadow: 0px 2px 12px #bfbfbf;
+    border: 0;
+    margin-bottom: 8px;
+
+}
+.break-string {
+    word-break: break-all;
+}
+@media (min-width: 768px) {
+    .order-review-container {
+        width: 60%;
+        margin: auto;
+    }
+}

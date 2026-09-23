@@ -1,0 +1,67 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Export Core for Magento 2 (System)
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Config:etc/system_file.xsd">
+    <system>
+        <tab id="amasty" translate="label" sortOrder="999999" class="amasty-tab ambase-tab-container">
+            <label>Amasty Extensions</label>
+        </tab>
+        <section id="amasty_export" translate="label" type="text" sortOrder="052416" showInDefault="1" showInWebsite="1" showInStore="1">
+            <label>Export</label>
+            <tab>amasty</tab>
+            <resource>Amasty_ExportCore::config</resource>
+            <group id="multi_process" translate="label" type="text" sortOrder="10" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Multi-Process Export</label>
+                <field id="enabled" translate="label tooltip" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Enable Multi-Process Export</label>
+                    <tooltip><![CDATA[The 'Multi-Process Export' feature requires the PHP extension 'pcntl' to be installed on the server. If you enable the feature and no performance boost happens, please ask your hoster/system administrator to check if the 'pcntl' extension is installed.]]></tooltip>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="max_process_count" translate="label tooltip" type="text" sortOrder="20" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Number of Parallel Processes</label>
+                    <tooltip>The more parallel processes are set, the faster the export process goes, but the higher the server loads.</tooltip>
+                    <validate>validate-greater-than-zero</validate>
+                    <depends>
+                        <field id="*/*/enabled">1</field>
+                    </depends>
+                </field>
+            </group>
+            <group id="advanced" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>Advanced</label>
+                <field id="debug" translate="label comment" type="select" sortOrder="10" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Enable Debug Mode</label>
+                    <comment><![CDATA[Enabling this setting will allow detecting errors and display detailed information about them including server errors. Also useful error information can be found in var/log/amasty_export_debug.log.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+                <field id="process_status_check_mode" type="select" translate="label comment" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>Process Status Check Mode</label>
+                    <comment><![CDATA[If you encounter issues with tracking process status and unexpected errors during import or export in a multi-node environment, please select the 'Statuses' option in this setting.]]></comment>
+                    <source_model>Amasty\ImportExportCore\Model\OptionSource\ProcessStatusCheckMode</source_model>
+                    <config_path>amasty_importexport/advanced/process_status_check_mode</config_path>
+                </field>
+                <field id="no_memory_limit" translate="label comment" type="select" sortOrder="30" showInDefault="1"
+                       showInWebsite="0" showInStore="0">
+                    <label>Enable Export without Memory Limit</label>
+                    <comment><![CDATA[Enable this setting if export process terminates because of the memory limit exceed.]]></comment>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+            </group>
+            <group id="system" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="0" showInStore="0">
+                <label>System Settings</label>
+                <field id="cli_php_path" translate="label comment" type="note" showInDefault="1" showInWebsite="0" showInStore="0">
+                    <label>CLI PHP Path</label>
+                    <comment>Current CLI PHP path of your Magento which is used by our extension when running the commands directly during the processing of PHP requests. To change it, please run bin/magento config:set amasty_base/system/cli_php_path %CLI_PHP_PATH% from the command line.</comment>
+                    <frontend_model>Amasty\ImportExportCore\Block\Adminhtml\System\Config\CliPhpPath</frontend_model>
+                    <config_path>amasty_base/system/cli_php_path</config_path>
+                </field>
+            </group>
+        </section>
+    </system>
+</config>

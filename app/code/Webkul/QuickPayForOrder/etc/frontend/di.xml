@@ -1,0 +1,31 @@
+<?xml version="1.0"?>
+<!-- /**
+ * Webkul Software.
+ *
+ * @category  Webkul
+ * @package   Webkul_QuickPayForOrder
+ * @author    Webkul
+ * @copyright Copyright (c) Webkul Software Private Limited (https://webkul.com)
+ * @license   https://store.webkul.com/license.html
+ */ -->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Checkout\Model\CompositeConfigProvider">
+        <arguments>
+            <argument name="configProviders" xsi:type="array">
+                <item name="quickpay_config_provider" xsi:type="object">Webkul\QuickPayForOrder\Model\QuickPayConfigProvider</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Controller\Order\Reorder">
+        <plugin name="preventQuickOrderReorder" type="Webkul\QuickPayForOrder\Plugin\Controller\Order\Reorder"/>
+    </type>
+    <type name="Magento\Multishipping\Block\Checkout\Shipping">
+        <plugin name="afterGetShippingRates" type="Webkul\QuickPayForOrder\Plugin\Block\Checkout\Shipping"/>
+    </type>
+    <type name="Magento\Multishipping\Block\Checkout\Billing">
+        <plugin name="afterGetMethods" type="Webkul\QuickPayForOrder\Plugin\Block\Checkout\Billing"/>
+    </type>
+
+    <preference for="Magento\Multishipping\Controller\Checkout\CheckItems" type="Webkul\QuickPayForOrder\Controller\Checkout\CheckItems" />
+    <preference for="Magento\Multishipping\Controller\Checkout\AddressesPost" type="Webkul\QuickPayForOrder\Controller\Checkout\AddressesPost" />
+</config>

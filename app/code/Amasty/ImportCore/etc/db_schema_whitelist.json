@@ -1,0 +1,44 @@
+{
+    "amasty_import_batch": {
+        "column": {
+            "id": true,
+            "created_at": true,
+            "process_identity": true,
+            "batch_data": true
+        },
+        "index": {
+            "AMASTY_IMPORT_BATCH_PROCESS_IDENTITY": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    },
+    "amasty_import_process": {
+        "column": {
+            "id": true,
+            "entity_code": true,
+            "profile_config": true,
+            "identity": true,
+            "pid": true,
+            "status": true,
+            "finished": true,
+            "import_result": true
+        },
+        "constraint": {
+            "PRIMARY": true,
+            "AMASTY_IMPORT_PROCESS_IDENTITY": true
+        }
+    },
+    "amasty_import_file_upload_map": {
+        "column": {
+            "id": true,
+            "filename": true,
+            "fileext": true,
+            "hash": true,
+            "created_at": true
+        },
+        "constraint": {
+            "PRIMARY": true
+        }
+    }
+}

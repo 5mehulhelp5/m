@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:ObjectManager/etc/config.xsd">
+    <type name="Magento\Sales\Api\OrderRepositoryInterface">
+        <plugin sortOrder="1" name="AmastyStoreCredit::OrderRepository" type="Amasty\StoreCredit\Plugin\Sales\Model\OrderRepositoryPlugin"/>
+    </type>
+
+    <type name="Amasty\StoreCredit\Model\Total\Quote\MaxStoreCredit\RetrieveStrategyPool">
+        <arguments>
+            <argument name="retrievers" xsi:type="array">
+                <item name="1" xsi:type="object">Amasty\StoreCredit\Model\Total\Quote\MaxStoreCredit\RestrictStrategy\Proxy</item>
+            </argument>
+        </arguments>
+    </type>
+    <type name="Magento\Sales\Model\RefundOrder">
+        <plugin name="Amasty_StoreCredit::SaveEnteredCreditAmount"
+                type="Amasty\StoreCredit\Plugin\Sales\Model\RefundOrder\SaveEnteredCreditAmount"/>
+        <plugin name="Amasty_StoreCredit::AddStoreCredit"
+                type="Amasty\StoreCredit\Plugin\Sales\Model\RefundOrder\AddStoreCredit"/>
+    </type>
+    <type name="Magento\Sales\Model\Order\CreditmemoDocumentFactory">
+        <plugin name="Amasty_StoreCredit::RefundToStoreCredit"
+                type="Amasty\StoreCredit\Plugin\Sales\Model\Order\CreditmemoDocumentFactory\RefundToStoreCredit"/>
+    </type>
+    <type name="Magento\Sales\Model\Order">
+        <plugin name="Amasty_StoreCredit::OrderPlugin" type="Amasty\StoreCredit\Plugin\Sales\Model\OrderPlugin" />
+    </type>
+    <type name="Magento\Sales\Model\RefundInvoice">
+        <plugin name="Amasty_StoreCredit::SaveEnteredAmount"
+                type="Amasty\StoreCredit\Plugin\Sales\Model\RefundInvoice\SaveEnteredAmount"/>
+        <plugin name="Amasty_StoreCredit::AddStoreCredit"
+                type="Amasty\StoreCredit\Plugin\Sales\Model\RefundInvoice\AddStoreCredit"/>
+    </type>
+</config>

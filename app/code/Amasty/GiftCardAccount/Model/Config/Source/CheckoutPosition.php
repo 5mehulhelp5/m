@@ -1,0 +1,59 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Account by Amasty (System)
+ */
+
+namespace Amasty\GiftCardAccount\Model\Config\Source;
+
+use Magento\Framework\Module\Manager;
+
+class CheckoutPosition implements \Magento\Framework\Data\OptionSourceInterface
+{
+    public const CHECKOUT_DISCOUNTS = 0;
+    public const AMASTY_OSC_PAYMENT_BLOCK = 1;
+
+    /**
+     * @var Manager
+     */
+    private $moduleManager;
+
+    public function __construct(Manager $moduleManager)
+    {
+        $this->moduleManager = $moduleManager;
+    }
+
+    /**
+     * @return array
+     */
+    public function toOptionArray()
+    {
+        $optionArray = [];
+
+        foreach ($this->toArray() as $value => $label) {
+            $optionArray[] = ['value' => $value, 'label' => $label];
+        }
+
+        return $optionArray;
+    }
+
+    /**
+     * Get options in "key-value" format
+     *
+     * @return array
+     */
+    public function toArray()
+    {
+        $result = [self::CHECKOUT_DISCOUNTS => __('Checkout Discounts')];
+
+        if ($this->moduleManager->isEnabled('Amasty_Checkout')) {
+            $result[self::AMASTY_OSC_PAYMENT_BLOCK] = __('Amasty Checkout Payment Methods Block');
+        }
+
+        return $result;
+    }
+}

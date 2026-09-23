@@ -1,0 +1,25 @@
+Legend
+
++ Features
+- Bugs
+
+-------------------------------- Version 4.0.0 --------------------------------------
+	+ Compatible with Magento 2.4.x
+	+ Admin can choose custom email template for quickpay link email.
+	+ Attachment link added in email.
+
+-------------------------------- Version 3.0.0 --------------------------------------
+	+ Support Online Payment methods.
+	+ Selected shipping method and selected payment methods are displayed to customer at checkout page.
+	- Fixed Bugs.
+
+-------------------------------- Version 2.1.0 --------------------------------------
+	+ Compatible with Magento 2.3.x
+
+-------------------------------- Version 2.0.0 --------------------------------------
+
+ 	+ Admin can create an order and send the order URL to customer to complete it.
+	+ Admin is able to add a service product which contain multiple services.
+	+ Admin can add/remove services from service product.
+    + Admin can add attachment with order.
+	+ Customer receives order summary email and a link to complete the order.

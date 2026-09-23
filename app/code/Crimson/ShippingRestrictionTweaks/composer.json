@@ -1,0 +1,20 @@
+{
+  "name": "crimson/shipping-restriction-tweaks",
+  "version": "1.0.0",
+  "description": "Provides some minor tweaks to the shipping restriction plugin.",
+  "type": "magento2-module",
+  "require": {
+    "magento/framework": "*"
+  },
+  "license": [
+    "Proprietary"
+  ],
+  "autoload": {
+    "files": [
+      "registration.php"
+    ],
+    "psr-4": {
+      "Crimson\\ShippingRestrictionTweaks\\": ""
+    }
+  }
+}

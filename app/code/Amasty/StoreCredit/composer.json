@@ -1,0 +1,24 @@
+{
+    "name": "amasty/store-credit",
+    "description": "Store Credit by Amasty",
+    "require": {
+        "php": ">=7.3",
+        "amasty/base": ">=1.19.1"
+    },
+    "suggest": {
+        "amasty/module-store-credit-product": "By installing this Amasty_StoreCreditProduct in addition to Amasty_StoreCredit v.1.2.0+, you will get a new feature that will allow (a) your customers to purchase Store Credit as a product from your website and (b) your store managers to place such orders for customers from the admin panel"
+    },
+    "type": "magento2-module",
+    "version": "1.4.3",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Amasty\\StoreCredit\\": ""
+        }
+    }
+}

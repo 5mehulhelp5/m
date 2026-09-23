@@ -1,0 +1,118 @@
+<?php
+/** @var \CyberSolutionsLLC\CategoryTiles\Block\Adminhtml\Widget\ImageChooser $block */
+$elementId = $block->getElementId();
+$elementName = $block->getElementName();
+$elementValue = $block->getElementValue();
+$uploadUrl = $block->getUploadUrl();
+$mediaUrl = $block->getMediaUrl();
+$previewUrl = $elementValue ? $mediaUrl . $elementValue : '';
+$inputId = $elementId . '_value';
+?>
+<div id="<?= $block->escapeHtmlAttr($elementId) ?>_container" class="category-tiles-image-upload">
+    <input type="hidden"
+           id="<?= $block->escapeHtmlAttr($inputId) ?>"
+           name="<?= $block->escapeHtmlAttr($elementName) ?>"
+           value="<?= $block->escapeHtmlAttr($elementValue) ?>" />
+
+    <div id="<?= $block->escapeHtmlAttr($elementId) ?>_preview"
+         style="margin-bottom:10px;<?= !$previewUrl ? 'display:none;' : '' ?>">
+        <img src="<?= $block->escapeUrl($previewUrl) ?>"
+             alt="Preview"
+             style="max-width:200px; max-height:200px; border:1px solid #ccc; padding:4px;" />
+        <br/>
+        <button type="button"
+                class="action-default"
+                style="margin-top:5px;"
+                onclick="categoryTilesRemoveImage_<?= $block->escapeJs($elementId) ?>()">
+            <span><?= $block->escapeHtml(__('Remove')) ?></span>
+        </button>
+    </div>
+
+    <div id="<?= $block->escapeHtmlAttr($elementId) ?>_upload_area">
+        <input type="file"
+               id="<?= $block->escapeHtmlAttr($elementId) ?>_file"
+               accept="image/*"
+               style="display:none;" />
+        <button type="button"
+                class="action-default scalable"
+                onclick="document.getElementById('<?= $block->escapeJs($elementId) ?>_file').click()">
+            <span><?= $block->escapeHtml(__('Upload Image')) ?></span>
+        </button>
+        <span id="<?= $block->escapeHtmlAttr($elementId) ?>_status" style="margin-left:10px;"></span>
+    </div>
+</div>
+
+<script>
+require(['jquery'], function($) {
+    var inputId = '<?= $block->escapeJs($inputId) ?>';
+    var elementId = '<?= $block->escapeJs($elementId) ?>';
+    var uploadUrl = '<?= $block->escapeJs($uploadUrl) ?>';
+    var mediaUrl = '<?= $block->escapeJs($mediaUrl) ?>';
+
+    function showPreview(path) {
+        if (!path) return;
+        var url = path.indexOf('http') === 0 ? path : mediaUrl + path;
+        $('#' + elementId + '_preview img').attr('src', url);
+        $('#' + elementId + '_preview').show();
+    }
+
+    // Initialize: check if value already exists (e.g., re-editing a saved widget)
+    var currentVal = $('#' + inputId).val();
+    if (currentVal) {
+        showPreview(currentVal);
+    }
+
+    // Also check if the original Label element's control-value div has a path
+    // (Magento sets the value there when re-loading widget options)
+    var $container = $('#' + elementId + '_container');
+    var $controlValue = $container.closest('td, .admin__field-control').find('.control-value');
+    if (!currentVal && $controlValue.length) {
+        var labelText = $.trim($controlValue.text());
+        if (labelText && labelText !== 'true' && labelText.indexOf('/') !== -1) {
+            $('#' + inputId).val(labelText);
+            showPreview(labelText);
+            $controlValue.text('');
+        }
+    }
+
+    $('#' + elementId + '_file').on('change', function() {
+        var file = this.files[0];
+        if (!file) return;
+
+        var formData = new FormData();
+        formData.append('image', file);
+        formData.append('form_key', window.FORM_KEY);
+
+        var $status = $('#' + elementId + '_status');
+        $status.text('<?= $block->escapeJs(__('Uploading...')) ?>');
+
+        $.ajax({
+            url: uploadUrl,
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            showLoader: true,
+            success: function(response) {
+                if (response.error) {
+                    $status.text(response.error);
+                    return;
+                }
+                $('#' + inputId).val(response.path).trigger('change');
+                showPreview(response.path);
+                $status.text('');
+            },
+            error: function() {
+                $status.text('<?= $block->escapeJs(__('Upload failed. Please try again.')) ?>');
+            }
+        });
+
+        this.value = '';
+    });
+
+    window['categoryTilesRemoveImage_' + elementId] = function() {
+        $('#' + inputId).val('').trigger('change');
+        $('#' + elementId + '_preview').hide();
+    };
+});
+</script>

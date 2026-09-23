@@ -1,0 +1,18 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Pro Functionality for Magento 2 (System)
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:noNamespaceSchemaLocation="urn:magento:framework:Event/etc/events.xsd">
+    <event name="amasty_giftcard_account_create_before_save">
+        <observer name="amasty_giftcard_pro_account_create_before_save"
+                  instance="Amasty\GiftCardProFunctionality\Observer\CreateAccount" />
+    </event>
+    <event name="amasty_giftcard_applied_accounts_before_save">
+        <observer name="amasty_giftcard_pro_applied_accounts_before_save"
+                  instance="Amasty\GiftCardProFunctionality\Observer\SaveAppliedAccounts" />
+    </event>
+</config>

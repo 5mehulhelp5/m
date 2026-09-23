@@ -1,0 +1,12 @@
+<?xml version="1.0"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Account by Amasty (System)
+ */-->
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:Communication/etc/communication.xsd">
+    <topic name="amasty_gift_card_account.send_notification" request="Amasty\GiftCardAccount\Model\Queue\Notifications\Dto\NotificationConfig">
+        <handler name="giftCardNotificationsHandler" type="Amasty\GiftCardAccount\Model\Queue\Notifications\Consumer" method="process"/>
+    </topic>
+</config>

@@ -1,0 +1,20 @@
+<?xml version="1.0"?>
+<csp_whitelist xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Csp:etc/csp_whitelist.xsd">
+    <policies>
+        <policy id="script-src">
+            <values>
+                <!-- Required Inline Script Hashes -->
+                <value id="script-hash-1" type="hash" algorithm="sha256">lLixXOojDbvAR7HmFGDw4NcYxhLAh+jerh5WoCMnghw=</value>
+                <value id="script-hash-2" type="hash" algorithm="sha256">/mn/hVvRlriuWOPO2gjPhHjgGsWVkcgv67NJu+Z4hYo=</value>
+                <value id="script-hash-3" type="hash" algorithm="sha256">/+cWIInLNR8MMg+ASBp0tEX4bky09r8k6Ublw5GcEss=</value>
+                <value id="script-hash-4" type="hash" algorithm="sha256">YC93gby2uzg4B0mr512lC6llzHLSr2jFjM5a3HYBdKs=</value>
+            </values>
+        </policy>
+        <policy id="font-src">
+            <values>
+                <value id="font-klaviyo" type="host">static.klaviyo.com</value>
+                <value id="font-gstatic" type="host">fonts.gstatic.com</value>
+            </values>
+        </policy>
+    </policies>
+</csp_whitelist>

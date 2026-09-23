@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Store Credit & Refund for Magento 2
+ */-->
+<page xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:framework:View/Layout/etc/page_configuration.xsd">
+    <body>
+        <referenceContainer name="content">
+            <block class="Magento\Backend\Block\Template" name="amstorecredit.note" template="Amasty_StoreCredit::system/config/note.phtml" after="-">
+                <arguments>
+                    <argument name="note_view_model" xsi:type="object">Amasty\StoreCredit\ViewModel\System\Config\Note</argument>
+                </arguments>
+            </block>
+        </referenceContainer>
+    </body>
+</page>

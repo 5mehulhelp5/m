@@ -1,0 +1,43 @@
+<?php
+/**
+ * @var \Magento\Framework\View\Element\Template $block
+ * @var \Magento\Framework\Escaper $escaper
+ */
+
+/** @var \CyberSolutionsLLC\CatalogExtend\ViewModel\Product\SeoCategoryLinks $viewModel */
+$viewModel = $block->getData('view_model');
+$links = $viewModel->getLinks();
+if (!$links) {
+    return;
+}
+
+$top = $links['top'];
+$sub = $links['sub'];
+
+$topLink = sprintf(
+    '<a href="%s">%s</a>',
+    $escaper->escapeUrl($top->getUrl()),
+    $escaper->escapeHtml($top->getName())
+);
+$subLink = $sub ? sprintf(
+    '<a href="%s">%s</a>',
+    $escaper->escapeUrl($sub->getUrl()),
+    $escaper->escapeHtml($sub->getName())
+) : null;
+?>
+<div class="product-seo-category-links" style="margin:30px 0;text-align:center;">
+    <p>
+        <?php if ($subLink): ?>
+            <?= /* @noEscape */ __(
+                'Looking for more options? Browse our full %1 category or shop related products in %2.',
+                $topLink,
+                $subLink
+            ) ?>
+        <?php else: ?>
+            <?= /* @noEscape */ __(
+                'Looking for more options? Browse our full %1 category.',
+                $topLink
+            ) ?>
+        <?php endif; ?>
+    </p>
+</div>

@@ -1,0 +1,21 @@
+{
+    "name": "webkul/quick-pay-order",
+    "description": "Quick Pay Order module for Magento2",
+    "require": {
+        "magento/module-sales": "103.0.*",
+        "magento/module-checkout": "100.4.*"
+    },
+    "type": "magento2-module",
+    "version": "4.0.0",
+    "license": [
+        "proprietary"
+    ],
+    "autoload": {
+        "files": [
+            "registration.php"
+        ],
+        "psr-4": {
+            "Webkul\\QuickPayForOrder\\": ""
+        }
+    }
+}

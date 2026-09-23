@@ -1,0 +1,31 @@
+<?php
+
+declare(strict_types=1);
+
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card Account by Amasty (System)
+ */
+
+namespace Amasty\GiftCardAccount\Model\GiftCardExtension\Order\ResourceModel;
+
+use Amasty\GiftCardAccount\Api\Data\GiftCardOrderInterface;
+use Magento\Framework\Model\ResourceModel\Db\AbstractDb;
+
+class Order extends AbstractDb
+{
+    public const TABLE_NAME = 'amasty_giftcard_order';
+
+    /**
+     * @var array[]
+     */
+    protected $_serializableFields = [
+        GiftCardOrderInterface::GIFT_CARDS => ['[]', []]
+    ];
+
+    protected function _construct()
+    {
+        $this->_init(self::TABLE_NAME, GiftCardOrderInterface::ENTITY_ID);
+    }
+}

@@ -1,0 +1,12 @@
+<?php
+/**
+ * @author Amasty Team
+ * @copyright Copyright (c) Amasty (https://www.amasty.com)
+ * @package Gift Card for Magento 2
+ */ /** @var \Amasty\GiftCard\Block\Adminhtml\System\Config\InformationBlocks\ImagickNotification $block */ ?>
+<?php /** @var \Magento\Framework\Escaper $escaper */ ?>
+<div>
+    <p class="message message-notice">
+        <?= $escaper->escapeHtml($block->getNotificationText(), ['a']) ?>
+    </p>
+</div>

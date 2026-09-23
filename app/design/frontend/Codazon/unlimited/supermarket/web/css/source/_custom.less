@@ -1,0 +1,164 @@
+// =============================================================================
+// Custom project styles
+// =============================================================================
+// Add new CSS/LESS rules below. This file is imported by custom.less.
+// Use LESS nesting and variables from the parent theme freely.
+// =============================================================================
+
+@media (min-width: 768px) {
+    .cdz-menu:not(.cdz-toggle-menu) .groupmenu-drop a.menu-link {
+        font-size: 18px;
+    }
+}
+
+.cdz-menu .item.level-top>.groupmenu-drop>.tablet-item {
+    display: none;
+}
+
+.product-seo-category-links {
+    text-align: center;
+    background: white;
+    padding: 15px 30px;
+
+    p {
+        margin: 0;
+
+        a {
+            color: #ffcb05 !important;
+        }
+    }
+}
+.cdz-opc-wrapper {
+    #checkoutSteps {
+        .checkout-payment-method {
+            #checkout-payment-method-load{
+                margin-bottom: 30px;
+                .payment-method {
+                    padding-bottom: 20px;
+                    .payment-method-content {
+                        .fieldset > .field.type {
+                            margin: 0 0 5px;
+
+                            .control {
+                                margin-left: 0;
+                            }
+                        }
+
+                        .fieldset > .field:not(.type) {
+                            margin: 0 0 10px;
+                        }
+
+                        .fieldset > .field {
+                            &.date {
+                                margin-bottom: 0;
+                            }
+                        }
+                    }
+
+                    .credit-card-types {
+                        li:first-child {
+                            img {
+                                margin-left: -8px;
+                            }
+                        }
+                    }
+
+                    .payment-method-billing-address {
+                        padding: 0;
+
+                        .checkout-billing-address {
+                            margin-bottom: 20px;
+                        }
+                    }
+                }
+            }
+            .opc-payment-additional.discount-code{
+                border-bottom: none;
+                .payment-option-title .action-toggle:after{
+                    display:none;
+                }
+                .payment-option-content{
+                    display: block!important;
+                    .form-discount{
+                        display:flex;
+                        .payment-option-inner{
+                            width: calc(100% - 144px);
+                            margin: 0;
+                            input{
+                                height: 32px;
+                                line-height: 32px;
+                            }
+                        }
+                        .actions-toolbar{
+                            align-self: flex-start;
+                            width: 144px;
+                            button{
+                                margin: 0;
+                                border-radius: 0;
+                                padding: 4.5px 16px;
+                                min-width: 144px;
+                            }
+                        }
+                    }
+                }
+            }
+            .amcard-codes-list{
+                background: #ffffff;
+                padding: 0 20px;
+                border-left: 1px solid #cbd49b;
+                border-right: 1px solid #cbd49b;
+                .amcard-check{
+                    color: #000000;
+                }
+                .message.error{
+                    margin: 0;
+                }
+            }
+            .amcard-field-container.-cart{
+                max-width: 100%;
+                background: #ffffff;
+                padding: 0 20px 20px;
+                border-left: 1px solid #cbd49b;
+                border-right: 1px solid #cbd49b;
+                border-bottom: 1px solid #cbd49b;
+                .amcard-field-block > .amcard-button{
+                    padding: 7.5px 17px;
+                    background: #cbb782;
+                    border-color: #cbb782;
+                    text-transform: uppercase;
+                    &:hover{
+                        background: #ffffff;
+                        color: #cbb782;
+                    }
+                }
+                .amcard-check{
+                    color: #000000;
+                }
+                .message.error{
+                    margin: 0;
+                }
+            }
+        }
+    }
+    .opc-sidebar{
+        .checkout-agreements-block{
+            .checkout-agreement.field{
+                input[type="checkbox"]{
+                    margin: -5px 5px 0 0;
+                }
+            }
+        }
+    }
+}
+.catalog-product-view{
+    .product-info-main{
+        .box-tocart .actions{
+            display:flex;
+            flex-direction: column;
+            row-gap: 15px;
+            #product-buy-now-button{
+                padding: 10px 25px;
+            }
+        }
+    }
+}
