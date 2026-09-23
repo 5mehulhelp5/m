@@ -47,6 +47,10 @@
 # 2) "How to adapt `pub/get.php` to Windows in Magento ≥ 2.4.2?" https://mage2.pro/t/6415
 !/pub/get.php
 # 2026-09-23 Dmitrii Fediuk https://github.com/dmitrii-fediuk
+# «We are now seeing filter URLs appearing in Google’s index»:
+# https://github.com/tactical-expressions/core/issues/1
+!/pub/robots.txt
+# 2026-09-23 Dmitrii Fediuk https://github.com/dmitrii-fediuk
 # 1) "Adapt the website to Windows-based servers": https://github.com/tactical-expressions/m/issues/1
 # 2) "How to fix interceptors generation on `bin/magento setup:di:compile` in Magento ≥ 2.2 in Windows?":
 # https://mage2.pro/t/4702

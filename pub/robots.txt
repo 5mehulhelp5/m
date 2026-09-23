@@ -1,0 +1,120 @@
+# Tactical Expressions - Transition Robots.txt
+# Version: 1.2 (SEO-Focused - Allows Only Critical Resources)
+# Date: 2025-11-14
+
+User-agent: *
+
+# ============================================
+# CRITICAL: Allow resources needed for rendering
+# ============================================
+Allow: /*?p=              # Pagination
+Allow: /*&p=              # Pagination alternative
+Allow: /*.css?*           # CSS with cache-busting
+Allow: /*.js?*            # JavaScript with cache-busting
+
+# ============================================
+# Block all Magento internal search result pages
+# ============================================
+Disallow: /catalogsearch/result/
+Disallow: /catalogsearch/result/index/
+Disallow: /?catalogsearch/
+Disallow: /catalog/product/view/
+
+# ============================================
+# BLOCK: All other URL parameters
+# ============================================
+Disallow: /*?*
+Disallow: /*&dir=*
+Disallow: /*&order=*
+Disallow: /*&limit=*
+Disallow: /*?dir=*
+Disallow: /*?order=*
+Disallow: /*?limit=*
+Disallow: /*?product_list_dir=*
+Disallow: /*&product_list_dir=*
+Disallow: /*?product_list_order=*
+Disallow: /*&product_list_order=*
+Disallow: /*?SID=*
+Disallow: /*&SID=*
+Disallow: /*?*cerakote_color=
+Disallow: /*?*color_master=
+Disallow: /*?*finish_type=
+Disallow: /*?*gun_model=
+Disallow: /*?*dust_cover_open=
+Disallow: /*?*mag_cap=
+Disallow: /*?*handguard_length=
+Disallow: /*?*tmarks=
+Disallow: /*?*special_price=
+
+# ============================================
+# BLOCK: Checkout, cart, customer areas
+# ============================================
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /customer/
+Disallow: /wishlist/
+Disallow: /review
+Disallow: /sendfriend/
+Disallow: /paypal/express/
+Disallow: /qquoteadv/
+Disallow: /catalog/product_compare/
+
+# ============================================
+# BLOCK: System directories
+# ============================================
+Disallow: /app/
+Disallow: /lib/
+Disallow: /var/
+Disallow: /includes/
+Disallow: /pkginfo/
+Disallow: /report/
+Disallow: /downloader/
+Disallow: /cgi-bin/
+Disallow: /stats/
+Disallow: /magento/
+
+# ============================================
+# BLOCK: Non-production environments
+# ============================================
+Disallow: /staging/
+Disallow: /dev/
+Disallow: /boss171/
+
+# ============================================
+# BLOCK: Specific unwanted paths
+# ============================================
+Disallow: /index.php/
+Disallow: /catalog/category/view/
+Disallow: /contacts/
+Disallow: /newsletter/
+Disallow: /poll/
+Disallow: /tag/
+Disallow: /review/
+Disallow: /404/
+Disallow: /*/l/*
+
+# ============================================
+# BLOCK: System files
+# ============================================
+Disallow: /cron.php
+Disallow: /cron.sh
+Disallow: /error_log
+Disallow: /install.php
+Disallow: /LICENSE.html
+Disallow: /LICENSE.txt
+Disallow: /LICENSE_AFL.txt
+Disallow: /STATUS.txt
+
+# ============================================
+# ALLOW: Media folder
+# ============================================
+Allow: /media/
+
+# ============================================
+# Sitemap
+# ============================================
+Sitemap: https://tactical-expressions.com/sitemap.xml
+
+
+
